@@ -6,7 +6,7 @@ defineProps<{
 }>()
 
 const rootRef = ref<HTMLElement | null>(null)
-const { fadeSlideDown } = useLeaderboardAnimations()
+const { fadeSlideDown, runAfterPaint } = useLeaderboardAnimations()
 
 function formatTime(value: Date | null | undefined) {
   if (!value) return null
@@ -16,14 +16,12 @@ function formatTime(value: Date | null | undefined) {
   }).format(value)
 }
 
-onMounted(() => {
-  nextTick(() => {
-    if (!rootRef.value) return
-    fadeSlideDown(rootRef.value.querySelectorAll('[data-enter]'), {
-      stagger: 0.08,
-      y: -14,
-      duration: 0.55,
-    })
+runAfterPaint(() => {
+  if (!rootRef.value) return
+  fadeSlideDown(rootRef.value.querySelectorAll('[data-enter]'), {
+    stagger: 0.08,
+    y: -14,
+    duration: 0.55,
   })
 })
 </script>

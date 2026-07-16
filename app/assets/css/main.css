@@ -108,17 +108,17 @@
 
   .podium-block--gold {
     background: linear-gradient(180deg, #FEF9C3 0%, #FDE047 30%, #CA8A04 100%);
-    min-height: 5.5rem;
+    min-height: 4.5rem;
   }
 
   .podium-block--silver {
     background: linear-gradient(180deg, #F8FAFC 0%, #CBD5E1 40%, #64748B 100%);
-    min-height: 4rem;
+    min-height: 3.25rem;
   }
 
   .podium-block--bronze {
     background: linear-gradient(180deg, #FFEDD5 0%, #FDBA74 40%, #B45309 100%);
-    min-height: 3.25rem;
+    min-height: 2.75rem;
   }
 
   @media (min-width: 640px) {
@@ -208,6 +208,127 @@
     color: var(--kalbe-green-dark);
     box-shadow: 0 1px 4px rgba(132, 204, 22, 0.35);
   }
+
+  .splash-screen {
+    background: var(--bg-page);
+  }
+
+  .splash-screen__gradient {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 20%, rgba(132, 204, 22, 0.18), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(21, 128, 61, 0.1), transparent 50%),
+      radial-gradient(ellipse 40% 35% at 10% 70%, rgba(56, 189, 248, 0.08), transparent 45%),
+      linear-gradient(180deg, #F8FAF9 0%, #F0FDF4 50%, #ECFDF5 100%);
+  }
+
+  .splash-logo-glow {
+    background: radial-gradient(circle, rgba(132, 204, 22, 0.45) 0%, transparent 70%);
+    animation: splash-pulse 2.8s ease-in-out infinite;
+  }
+
+  .splash-ring {
+    position: absolute;
+    border-radius: 9999px;
+    border: 1px solid rgba(21, 128, 61, 0.12);
+    pointer-events: none;
+  }
+
+  .splash-ring--1 {
+    width: 280px;
+    height: 280px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -58%);
+    animation: splash-ring-spin 18s linear infinite;
+  }
+
+  .splash-ring--2 {
+    width: 360px;
+    height: 360px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -58%);
+    border-color: rgba(132, 204, 22, 0.15);
+    animation: splash-ring-spin 24s linear infinite reverse;
+  }
+
+  .splash-ring--3 {
+    width: 440px;
+    height: 440px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -58%);
+    border-style: dashed;
+    border-color: rgba(21, 128, 61, 0.08);
+    animation: splash-ring-spin 32s linear infinite;
+  }
+
+  .splash-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(60px);
+    pointer-events: none;
+    animation: splash-float 6s ease-in-out infinite;
+  }
+
+  .splash-orb--1 {
+    width: 180px;
+    height: 180px;
+    top: 15%;
+    left: 10%;
+    background: rgba(132, 204, 22, 0.2);
+  }
+
+  .splash-orb--2 {
+    width: 140px;
+    height: 140px;
+    bottom: 20%;
+    right: 12%;
+    background: rgba(21, 128, 61, 0.12);
+    animation-delay: -3s;
+  }
+
+  .splash-progress-track {
+    @apply relative h-2.5 w-full overflow-hidden rounded-full;
+    background: rgba(21, 128, 61, 0.08);
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+  }
+
+  .splash-progress-fill {
+    @apply relative h-full rounded-full;
+    width: 0%;
+    background: linear-gradient(90deg, #15803D 0%, #84CC16 55%, #BEF264 100%);
+    box-shadow: 0 0 16px rgba(21, 128, 61, 0.35);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .splash-progress-shimmer {
+    @apply pointer-events-none absolute inset-0 rounded-full;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.35) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+    mix-blend-mode: overlay;
+  }
+}
+
+@keyframes splash-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes splash-ring-spin {
+  from { transform: translate(-50%, -58%) rotate(0deg); }
+  to { transform: translate(-50%, -58%) rotate(360deg); }
+}
+
+@keyframes splash-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
 @media (prefers-reduced-motion: reduce) {

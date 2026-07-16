@@ -12,7 +12,7 @@ type OverviewTab = 'stats' | 'hot'
 const rootRef = ref<HTMLElement | null>(null)
 const statsPanelRef = ref<HTMLElement | null>(null)
 const hotPanelRef = ref<HTMLElement | null>(null)
-const { scaleIn, staggerIn, fadeSlideUp } = useLeaderboardAnimations()
+const { scaleIn, staggerIn, fadeSlideUp, runAfterPaint } = useLeaderboardAnimations()
 
 const activeTab = ref<OverviewTab>('stats')
 
@@ -39,17 +39,15 @@ watch(activeTab, (tab) => {
   animateActivePanel(tab)
 })
 
-onMounted(() => {
-  nextTick(() => {
-    if (rootRef.value) {
-      scaleIn(rootRef.value.querySelector('[data-overview-card]'), {
-        delay: 0.2,
-        scale: 0.96,
-        duration: 0.6,
-      })
-    }
-    animateActivePanel('stats')
-  })
+runAfterPaint(() => {
+  if (rootRef.value) {
+    scaleIn(rootRef.value.querySelector('[data-overview-card]'), {
+      delay: 0.25,
+      scale: 0.96,
+      duration: 0.6,
+    })
+  }
+  animateActivePanel('stats')
 })
 </script>
 

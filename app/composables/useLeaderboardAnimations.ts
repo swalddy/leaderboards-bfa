@@ -1,4 +1,5 @@
-import type { gsap as GsapType } from 'gsap'
+import confetti from 'canvas-confetti'
+import gsap from 'gsap'
 
 type RevealOptions = {
   delay?: number
@@ -12,14 +13,26 @@ type RevealOptions = {
 }
 
 export function useLeaderboardAnimations() {
-  const { $gsap } = useNuxtApp()
-  const gsap = $gsap as typeof GsapType
   const prefersReducedMotion = usePreferredReducedMotion()
 
-  const duration = (sec: number) => (prefersReducedMotion.value ? 0 : sec)
+  const duration = (sec: number) => {
+    if (!import.meta.client) return 0
+    if (prefersReducedMotion.value) return Math.min(sec, 0.3)
+    return sec
+  }
 
   function canAnimate() {
-    return import.meta.client && !!gsap && !prefersReducedMotion.value
+    return import.meta.client
+  }
+
+  function runAfterPaint(callback: () => void) {
+    onMounted(() => {
+      nextTick(() => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(callback)
+        })
+      })
+    })
   }
 
   function revealFrom(
@@ -28,18 +41,23 @@ export function useLeaderboardAnimations() {
     to: gsap.TweenVars,
     options: RevealOptions = {},
   ) {
-    if (!import.meta.client || !gsap) return
+    if (!import.meta.client) return
+    if (!targets || (targets instanceof NodeList && targets.length === 0)) return
+
+    const dur = duration(options.duration ?? 0.7)
 
     gsap.fromTo(
       targets,
       from,
       {
         ...to,
-        duration: duration(options.duration ?? 0.7),
+        duration: dur,
         delay: options.delay ?? 0,
-        stagger: prefersReducedMotion.value ? 0 : (options.stagger ?? 0),
+        stagger: options.stagger ?? 0,
         ease: options.ease ?? 'power3.out',
-        clearProps: options.clearProps ?? (prefersReducedMotion.value ? '' : 'transform,opacity'),
+        immediateRender: true,
+        clearProps: options.clearProps ?? 'transform,opacity',
+        overwrite: 'auto',
       },
     )
   }
@@ -98,54 +116,40 @@ export function useLeaderboardAnimations() {
     })
   }
 
-  function revealPodium(
-    root: HTMLElement | null,
-    cards: gsap.TweenTarget,
-  ) {
-    if (!import.meta.client || !gsap || !root) return
+  function revealPodium(root: HTMLElement | null) {
+    if (!import.meta.client || !root) return null
 
     const heading = root.querySelector('[data-podium-heading]')
-    const arena = root.querySelector('[data-podium-arena]')
+    const cards = root.querySelectorAll('[data-podium-card]')
 
-    const tl = gsap.timeline({
-      defaults: { ease: 'power3.out' },
-    })
-
-    if (prefersReducedMotion.value) {
-      gsap.set([heading, arena, cards], { opacity: 1, y: 0, scale: 1 })
-      return
-    }
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
 
     if (heading) {
       tl.fromTo(
         heading,
-        { opacity: 0, y: -12 },
-        { opacity: 1, y: 0, duration: duration(0.5) },
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: duration(0.55), immediateRender: true },
       )
     }
 
-    if (arena) {
+    if (cards.length) {
       tl.fromTo(
-        arena,
-        { opacity: 0, scale: 0.96, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: duration(0.65), ease: 'power2.out' },
-        '-=0.2',
+        cards,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: duration(0.9),
+          stagger: 0.12,
+          ease: 'power2.out',
+          immediateRender: true,
+          clearProps: 'transform,opacity',
+        },
+        heading ? '-=0.2' : 0,
       )
     }
 
-    tl.fromTo(
-      cards,
-      { opacity: 0, y: 48, scale: 0.9 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: duration(0.75),
-        stagger: 0.12,
-        ease: 'back.out(1.35)',
-      },
-      '-=0.35',
-    )
+    return tl
   }
 
   function revealListRows(
@@ -180,7 +184,7 @@ export function useLeaderboardAnimations() {
   }
 
   function floatElement(el: gsap.TweenTarget) {
-    if (!canAnimate()) return null
+    if (!canAnimate() || prefersReducedMotion.value) return null
 
     return gsap.to(el, {
       y: -6,
@@ -192,7 +196,7 @@ export function useLeaderboardAnimations() {
   }
 
   function animateProgress(el: HTMLElement | null, percent: number) {
-    if (!el || !import.meta.client || !gsap) return
+    if (!el || !import.meta.client) return
 
     gsap.to(el, {
       width: `${Math.min(100, Math.max(0, percent))}%`,
@@ -201,12 +205,37 @@ export function useLeaderboardAnimations() {
     })
   }
 
+  function playPodiumEntrance(root: HTMLElement | null) {
+    if (!root) return null
+
+    const tl = revealPodium(root)
+    const hasFiredConfetti = useState('podium-confetti-fired', () => false)
+
+    if (!prefersReducedMotion.value && !hasFiredConfetti.value) {
+      hasFiredConfetti.value = true
+      tl?.call(() => {
+        confetti({
+          origin: { y: 0.35 },
+          zIndex: 40,
+          particleCount: 36,
+          spread: 48,
+          startVelocity: 22,
+          ticks: 120,
+          disableForReducedMotion: true,
+          colors: ['#15803D', '#84CC16', '#CA8A04', '#ffffff'],
+        })
+      }, undefined, 0.75)
+    }
+
+    return tl
+  }
+
   function parallaxBlobs(
     blobs: HTMLElement[],
     mouseX: Ref<number>,
     mouseY: Ref<number>,
   ) {
-    if (!canAnimate()) return
+    if (!canAnimate() || prefersReducedMotion.value) return
 
     const setters = blobs.map((blob, i) => ({
       x: gsap.quickSetter(blob, 'x', 'px'),
@@ -232,11 +261,13 @@ export function useLeaderboardAnimations() {
     prefersReducedMotion,
     duration,
     canAnimate,
+    runAfterPaint,
     fadeSlideUp,
     fadeSlideDown,
     scaleIn,
     staggerIn,
     revealPodium,
+    playPodiumEntrance,
     revealListRows,
     crossfadePanel,
     floatElement,

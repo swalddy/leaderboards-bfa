@@ -13,7 +13,7 @@ const emit = defineEmits<{
 }>()
 
 const rootRef = ref<HTMLElement | null>(null)
-const { fadeSlideUp } = useLeaderboardAnimations()
+const { fadeSlideUp, runAfterPaint } = useLeaderboardAnimations()
 
 const rangeStart = computed(() =>
   props.totalItems === 0 ? 0 : (props.currentPage - 1) * props.pageSize + 1,
@@ -43,12 +43,10 @@ function goTo(page: number) {
   emit('update:currentPage', page)
 }
 
-onMounted(() => {
-  nextTick(() => {
-    if (rootRef.value) {
-      fadeSlideUp(rootRef.value, { y: 12, delay: 0.5, duration: 0.45 })
-    }
-  })
+runAfterPaint(() => {
+  if (rootRef.value) {
+    fadeSlideUp(rootRef.value, { y: 12, delay: 0.55, duration: 0.45 })
+  }
 })
 </script>
 

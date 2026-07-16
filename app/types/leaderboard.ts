@@ -3,6 +3,14 @@ export type GenderFilter = 'all' | Gender
 export type CompanyFilter = 'all' | 'PT Agroveta Husada Dharma' | 'Corporate Function'
 export type SortBy = 'points' | 'alpha' | 'rank'
 
+export type LeaderboardLoadStage =
+  | 'idle'
+  | 'connecting'
+  | 'fetching'
+  | 'processing'
+  | 'complete'
+  | 'error'
+
 /** [ranking, employee_name, employee_id, company, category, current_points, total_points, sales_id] */
 export type RawLeaderboardRow = [
   number,
@@ -35,6 +43,7 @@ export interface LeaderboardEntry {
 
 export interface LeaderboardStats {
   totalParticipants: number
+  totalCalories: number
   highestCalories: number
   averageCalories: number
   companiesDisplayed: number

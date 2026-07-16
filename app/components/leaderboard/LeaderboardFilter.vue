@@ -8,7 +8,7 @@ const searchQuery = defineModel<string>('search', { required: true })
 const sortBy = defineModel<SortBy>('sort', { required: true })
 
 const rootRef = ref<HTMLElement | null>(null)
-const { scaleIn } = useLeaderboardAnimations()
+const { scaleIn, runAfterPaint } = useLeaderboardAnimations()
 
 const localSearch = ref(searchQuery.value)
 
@@ -47,15 +47,12 @@ function clearSearch() {
   searchQuery.value = ''
 }
 
-onMounted(() => {
-  nextTick(() => {
-    if (rootRef.value) {
-      scaleIn(rootRef.value.querySelector('[data-filter-bar]'), {
-        delay: 0.12,
-        scale: 0.97,
-        duration: 0.55,
-      })
-    }
+runAfterPaint(() => {
+  if (!rootRef.value) return
+  scaleIn(rootRef.value.querySelector('[data-filter-bar]'), {
+    delay: 0.15,
+    scale: 0.97,
+    duration: 0.55,
   })
 })
 </script>

@@ -4,12 +4,14 @@ import { CountUp } from 'countup.js'
 const props = withDefaults(defineProps<{
   value: number
   duration?: number
+  startDelay?: number
   decimals?: number
   prefix?: string
   suffix?: string
   separator?: string
 }>(), {
   duration: 1.4,
+  startDelay: 0,
   decimals: 0,
   prefix: '',
   suffix: '',
@@ -45,6 +47,11 @@ function run(to: number) {
 }
 
 onMounted(() => {
+  if (props.startDelay > 0) {
+    setTimeout(() => run(props.value), props.startDelay * 1000)
+    return
+  }
+
   run(props.value)
 })
 

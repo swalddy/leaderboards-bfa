@@ -132,14 +132,16 @@ export function computeStats(
 
   const points = filteredBeforeSearch.map(e => e.currentPoints)
   const totalParticipants = filteredBeforeSearch.length
+  const totalCalories = points.reduce((sum, p) => sum + p, 0)
   const highestCalories = points.length ? Math.max(...points) : 0
   const averageCalories = points.length
-    ? Math.round(points.reduce((sum, p) => sum + p, 0) / points.length)
+    ? Math.round(totalCalories / points.length)
     : 0
   const companiesDisplayed = new Set(filteredBeforeSearch.map(e => e.company)).size
 
   return {
     totalParticipants,
+    totalCalories,
     highestCalories,
     averageCalories,
     companiesDisplayed,
@@ -162,7 +164,7 @@ export function avatarColorFromName(name: string): string {
     hash = name.charCodeAt(i) + ((hash << 5) - hash)
   }
   const hue = hues[Math.abs(hash) % hues.length]
-  return `hsl(${hue} 45% 42%)`
+  return `hsl(${hue} 52% 38%)`
 }
 
 export function formatCalories(value: number): string {

@@ -12,6 +12,9 @@ export const API_URLS = {
 
 export const REFRESH_INTERVAL_MS = 60_000
 
+/** Minimum time splash stays visible so progress/enter animations are visible */
+export const MIN_SPLASH_MS = 3_000
+
 export const COMPANY_SHORT_LABELS: Record<AllowedCompany, string> = {
   'PT Agroveta Husada Dharma': 'Agroveta',
   'Corporate Function': 'Corporate',

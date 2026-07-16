@@ -10,9 +10,10 @@ const props = defineProps<{
 
 const rootRef = ref<HTMLElement | null>(null)
 const listRef = ref<HTMLElement | null>(null)
-const { fadeSlideUp, revealListRows } = useLeaderboardAnimations()
+const { fadeSlideUp, revealListRows, runAfterPaint } = useLeaderboardAnimations()
 
 const currentPage = ref(1)
+const hasAnimatedInitial = ref(false)
 
 watch(
   () => props.entries.map(e => entryKey(e)).join(','),
@@ -40,20 +41,24 @@ watch(totalPages, (total) => {
   if (currentPage.value > total) currentPage.value = total
 })
 
-onMounted(() => {
-  nextTick(() => {
-    if (rootRef.value) {
-      fadeSlideUp(rootRef.value.querySelectorAll('[data-list-header]'), {
-        y: 16,
-        stagger: 0.06,
-        delay: 0.35,
-        duration: 0.5,
-      })
-    }
+function animateListEntrance() {
+  if (!rootRef.value) return
+  fadeSlideUp(rootRef.value.querySelectorAll('[data-list-header]'), {
+    y: 16,
+    stagger: 0.06,
+    delay: 0.35,
+    duration: 0.5,
   })
+  revealListRows(listRef.value)
+}
+
+runAfterPaint(() => {
+  animateListEntrance()
+  hasAnimatedInitial.value = true
 })
 
 watch(paginatedEntries, () => {
+  if (!hasAnimatedInitial.value) return
   nextTick(() => revealListRows(listRef.value))
 }, { flush: 'post' })
 </script>
