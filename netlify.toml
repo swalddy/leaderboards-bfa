@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Nuxt/Nitro auto-detects Netlify; keep SSR for /api/leaderboard/*
+  NITRO_PRESET = "netlify"
