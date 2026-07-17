@@ -23,7 +23,6 @@ import {
   parseRow,
   processLeaderboard,
   recalculateRanks,
-  sortEntries,
   applySearch,
 } from '~/utils/leaderboard'
 
@@ -184,8 +183,7 @@ export function useLeaderboard(options: UseLeaderboardOptions) {
   const topThree = computed(() => {
     const ranked = filteredBeforeSearch.value
     const searched = applySearch(ranked, searchQuery.value)
-    const byPoints = sortEntries(searched, 'points')
-    return enrichEntries(byPoints).slice(0, 3)
+    return enrichEntries(recalculateRanks(searched)).slice(0, 3)
   })
 
   const restEntries = computed(() => {

@@ -129,9 +129,9 @@ export function processLeaderboard(
   result = applyNameAllowlist(result, options.nameAllowlist)
   result = applyGenderFilter(result, options.gender)
 
-  const ranked = recalculateRanks(result)
-  const searched = applySearch(ranked, options.search)
-  const sorted = sortEntries(searched, options.sortBy)
+  const searched = applySearch(recalculateRanks(result), options.search)
+  const reranked = recalculateRanks(searched)
+  const sorted = sortEntries(reranked, options.sortBy)
 
   // Keep rank from points-based ranking; enrich in display order
   return enrichEntries(sorted)

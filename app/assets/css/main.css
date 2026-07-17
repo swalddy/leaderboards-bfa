@@ -464,10 +464,31 @@
     z-index: 1;
   }
 
+  .podium-grid--solo {
+    grid-template-columns: minmax(0, min(100%, 15.5rem));
+    justify-content: center;
+  }
+
+  .podium-grid--duo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.22fr);
+    justify-content: center;
+    max-width: 28rem;
+    margin-inline: auto;
+  }
+
   @media (min-width: 640px) {
     .podium-grid {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr) minmax(0, 1fr);
       gap: 1rem;
+    }
+
+    .podium-grid--solo {
+      grid-template-columns: minmax(0, min(100%, 18rem));
+    }
+
+    .podium-grid--duo {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr);
+      max-width: 34rem;
     }
   }
 

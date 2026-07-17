@@ -15,9 +15,9 @@ const animationKey = ref(0)
 const eggActive = ref(false)
 const eggName = ref('')
 
-const first = computed(() => props.entries.find(e => e.rank === 1) ?? props.entries[0])
-const second = computed(() => props.entries.find(e => e.rank === 2) ?? props.entries[1])
-const third = computed(() => props.entries.find(e => e.rank === 3) ?? props.entries[2])
+const first = computed(() => props.entries[0])
+const second = computed(() => props.entries[1])
+const third = computed(() => props.entries[2])
 
 function playEntrance() {
   if (!import.meta.client || !rootRef.value || props.entries.length === 0) return
@@ -98,7 +98,13 @@ onUnmounted(() => {
     >
       <div class="podium-spotlight" data-podium-spotlight aria-hidden="true" />
 
-      <div class="podium-grid relative px-0.5 sm:px-1">
+      <div
+        class="podium-grid relative px-0.5 sm:px-1"
+        :class="{
+          'podium-grid--solo': entries.length === 1,
+          'podium-grid--duo': entries.length === 2,
+        }"
+      >
         <div
           v-if="second"
           data-podium-card
