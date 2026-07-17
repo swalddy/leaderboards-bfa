@@ -306,6 +306,11 @@
     filter: drop-shadow(0 14px 36px rgba(202, 138, 4, 0.32));
   }
 
+  .podium-card--champion:focus-visible {
+    outline: 2px solid #CA8A04;
+    outline-offset: 4px;
+  }
+
   .podium-champion-avatar-wrap {
     isolation: isolate;
     margin-block: 0.35rem 0.75rem;
@@ -523,6 +528,135 @@
     background-clip: text;
     color: transparent;
     filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.6));
+  }
+
+  .champion-sprint-egg {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .champion-sprint-caption {
+    position: absolute;
+    top: max(1.25rem, env(safe-area-inset-top, 0px) + 0.75rem);
+    left: 50%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    margin: 0;
+    padding: 0.65rem 1.15rem;
+    border-radius: 9999px;
+    background: linear-gradient(
+      135deg,
+      rgba(21, 128, 61, 0.94) 0%,
+      rgba(22, 101, 52, 0.92) 55%,
+      rgba(202, 138, 4, 0.9) 100%
+    );
+    box-shadow:
+      0 8px 28px rgba(21, 128, 61, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    opacity: 0;
+    white-space: nowrap;
+  }
+
+  .champion-sprint-caption__fire {
+    @apply font-display;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #FEF9C3;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  .champion-sprint-caption__sub {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(254, 249, 195, 0.78);
+  }
+
+  @media (min-width: 640px) {
+    .champion-sprint-caption {
+      top: max(1.75rem, env(safe-area-inset-top, 0px) + 1rem);
+      padding: 0.8rem 1.4rem;
+    }
+
+    .champion-sprint-caption__fire {
+      font-size: 1.05rem;
+    }
+
+    .champion-sprint-caption__sub {
+      font-size: 0.65rem;
+    }
+  }
+
+  .champion-sprint-runner {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    color: #15803D;
+    filter: drop-shadow(0 4px 10px rgba(21, 128, 61, 0.35));
+    opacity: 0;
+    will-change: transform;
+  }
+
+  .champion-sprint-runner[data-lane='1'],
+  .champion-sprint-runner[data-lane='4'] {
+    color: #CA8A04;
+  }
+
+  .champion-sprint-runner[data-lane='2'],
+  .champion-sprint-runner[data-lane='5'] {
+    color: #84CC16;
+  }
+
+  .champion-sprint-runner__svg {
+    width: 2.25rem;
+    height: 3rem;
+    display: block;
+    animation: champion-sprint-run-bob 0.28s ease-in-out infinite;
+  }
+
+  @media (min-width: 640px) {
+    .champion-sprint-runner__svg {
+      width: 2.75rem;
+      height: 3.65rem;
+    }
+  }
+
+  .champion-sprint-cal {
+    position: fixed;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.4rem;
+    padding: 0.2rem 0.45rem;
+    border-radius: 9999px;
+    @apply font-display;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .champion-sprint-cal--green {
+    color: #14532D;
+    background: linear-gradient(180deg, #BBF7D0 0%, #86EFAC 100%);
+    box-shadow: 0 4px 14px rgba(21, 128, 61, 0.28);
+  }
+
+  .champion-sprint-cal--gold {
+    color: #713F12;
+    background: linear-gradient(180deg, #FEF08A 0%, #FACC15 100%);
+    box-shadow: 0 4px 14px rgba(202, 138, 4, 0.3);
   }
 
   .podium-info-card--silver {
@@ -854,6 +988,11 @@
       0 0 0 1px rgba(255, 255, 255, 0.45) inset,
       0 0 36px rgba(253, 224, 71, 0.5);
   }
+}
+
+@keyframes champion-sprint-run-bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-5px) rotate(2deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {

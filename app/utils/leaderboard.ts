@@ -133,18 +133,14 @@ export function computeStats(
   const points = filteredBeforeSearch.map(e => e.currentPoints)
   const totalParticipants = filteredBeforeSearch.length
   const totalCalories = points.reduce((sum, p) => sum + p, 0)
-  const highestCalories = points.length ? Math.max(...points) : 0
   const averageCalories = points.length
     ? Math.round(totalCalories / points.length)
     : 0
-  const companiesDisplayed = new Set(filteredBeforeSearch.map(e => e.company)).size
 
   return {
     totalParticipants,
     totalCalories,
-    highestCalories,
     averageCalories,
-    companiesDisplayed,
     maleParticipants,
     femaleParticipants,
   }

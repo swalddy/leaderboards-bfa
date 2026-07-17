@@ -23,6 +23,23 @@ const mainCounterKey = computed(() => `main-${props.animationKey}-${props.entry.
 const hrCounterKey = computed(() => `hr-${props.animationKey}-${props.entry.employeeId}`)
 const isChampion = computed(() => props.place === 1)
 
+const emit = defineEmits<{
+  'easter-egg': []
+}>()
+
+function onChampionActivate() {
+  if (!isChampion.value) return
+  emit('easter-egg')
+}
+
+function onChampionKeydown(event: KeyboardEvent) {
+  if (!isChampion.value) return
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault()
+    emit('easter-egg')
+  }
+}
+
 const theme = computed(() => {
   if (props.place === 1) {
     return {
@@ -64,8 +81,16 @@ const theme = computed(() => {
 <template>
   <article
     class="podium-card w-full min-w-0"
-    :class="[theme.lift, isChampion && 'podium-card--champion']"
+    :class="[
+      theme.lift,
+      isChampion && 'podium-card--champion cursor-pointer select-none',
+    ]"
+    :role="isChampion ? 'button' : undefined"
+    :tabindex="isChampion ? 0 : undefined"
+    :title="isChampion ? 'Psst… tap the champion' : undefined"
     :aria-label="`Rank ${entry.rank}, ${displayName}${isDeveloper ? ' IT' : ''}, ${entry.currentPoints} calories`"
+    @click="onChampionActivate"
+    @keydown="onChampionKeydown"
   >
     <div
       v-if="isChampion"

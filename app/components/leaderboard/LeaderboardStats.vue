@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import {
   Users,
-  Flame,
   ChartNoAxesColumn,
-  Building2,
   Mars,
   Venus,
 } from 'lucide-vue-next'
@@ -16,9 +14,7 @@ const props = defineProps<{
 
 const cards = computed(() => [
   { key: 'total', label: 'Participants', value: props.stats.totalParticipants, icon: Users, bg: 'bg-emerald-50', tone: 'text-kalbe-green' },
-  { key: 'highest', label: 'Highest', value: props.stats.highestCalories, icon: Flame, bg: 'bg-amber-50', tone: 'text-amber-600' },
   { key: 'average', label: 'Average', value: props.stats.averageCalories, icon: ChartNoAxesColumn, bg: 'bg-sky-50', tone: 'text-sky-600' },
-  { key: 'companies', label: 'Companies', value: props.stats.companiesDisplayed, icon: Building2, bg: 'bg-emerald-50', tone: 'text-kalbe-green-deep' },
   { key: 'male', label: 'Male', value: props.stats.maleParticipants, icon: Mars, bg: 'bg-blue-50', tone: 'text-blue-600' },
   { key: 'female', label: 'Female', value: props.stats.femaleParticipants, icon: Venus, bg: 'bg-pink-50', tone: 'text-pink-600' },
 ])
@@ -33,7 +29,7 @@ const cards = computed(() => [
       Challenge overview
     </h2>
 
-    <div class="grid grid-cols-2 gap-1.5 sm:grid-cols-3 sm:gap-2 lg:grid-cols-6">
+    <div class="grid grid-cols-2 gap-1.5 sm:grid-cols-4 sm:gap-2">
       <article
         v-for="card in cards"
         :key="card.key"

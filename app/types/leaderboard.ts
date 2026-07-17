@@ -46,9 +46,7 @@ export interface LeaderboardEntry {
 export interface LeaderboardStats {
   totalParticipants: number
   totalCalories: number
-  highestCalories: number
   averageCalories: number
-  companiesDisplayed: number
   maleParticipants: number
   femaleParticipants: number
 }

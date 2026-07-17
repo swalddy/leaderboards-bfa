@@ -12,6 +12,9 @@ let podiumTimeline: gsap.core.Timeline | null = null
 let hasPlayed = false
 const animationKey = ref(0)
 
+const eggActive = ref(false)
+const eggName = ref('')
+
 const first = computed(() => props.entries.find(e => e.rank === 1) ?? props.entries[0])
 const second = computed(() => props.entries.find(e => e.rank === 2) ?? props.entries[1])
 const third = computed(() => props.entries.find(e => e.rank === 3) ?? props.entries[2])
@@ -36,6 +39,18 @@ function playEntrance() {
       })
     })
   })
+}
+
+function onChampionEasterEgg() {
+  if (eggActive.value || !first.value) return
+  const cooldownUntil = useState('champion-sprint-egg-cooldown', () => 0)
+  if (Date.now() < cooldownUntil.value) return
+  eggName.value = first.value.employeeName
+  eggActive.value = true
+}
+
+function onEggComplete() {
+  eggActive.value = false
 }
 
 defineExpose({ playEntrance })
@@ -110,6 +125,7 @@ onUnmounted(() => {
             :score-delay="0.55"
             :hr-score-delay="1"
             :animation-key="animationKey"
+            @easter-egg="onChampionEasterEgg"
           />
         </div>
 
@@ -130,5 +146,11 @@ onUnmounted(() => {
 
       <div data-podium-floor class="podium-floor" aria-hidden="true" />
     </div>
+
+    <LeaderboardChampionSprintEgg
+      :active="eggActive"
+      :champion-name="eggName"
+      @complete="onEggComplete"
+    />
   </section>
 </template>

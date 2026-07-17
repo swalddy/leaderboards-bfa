@@ -501,6 +501,232 @@ export function useLeaderboardAnimations() {
     return tl
   }
 
+  type ChampionSprintEggOptions = {
+    name?: string
+    onComplete?: () => void
+  }
+
+  let sprintEggTimeline: gsap.core.Timeline | null = null
+  const SPRINT_EGG_COOLDOWN_MS = 4000
+
+  function playChampionSprintEgg(
+    overlayRoot: HTMLElement | null,
+    originEl: HTMLElement | null,
+    options: ChampionSprintEggOptions = {},
+  ) {
+    if (!import.meta.client || !overlayRoot) {
+      options.onComplete?.()
+      return null
+    }
+
+    const cooldownUntil = useState('champion-sprint-egg-cooldown', () => 0)
+    const now = Date.now()
+    if (now < cooldownUntil.value) {
+      return null
+    }
+    cooldownUntil.value = now + SPRINT_EGG_COOLDOWN_MS
+
+    sprintEggTimeline?.kill()
+
+    const runners = overlayRoot.querySelectorAll<HTMLElement>('[data-sprint-runner]')
+    const cals = overlayRoot.querySelectorAll<HTMLElement>('[data-sprint-cal]')
+    const caption = overlayRoot.querySelector<HTMLElement>('[data-sprint-caption]')
+    const reduced = prefersReducedMotion.value
+
+    const originRect = originEl?.getBoundingClientRect()
+    const originX = originRect
+      ? (originRect.left + originRect.width / 2) / window.innerWidth
+      : 0.5
+    const originY = originRect
+      ? (originRect.top + originRect.height * 0.25) / window.innerHeight
+      : 0.35
+
+    if (originEl && !reduced) {
+      const pulseTarget =
+        originEl.querySelector<HTMLElement>('[data-podium-avatar]') ?? originEl
+      gsap.fromTo(
+        pulseTarget,
+        { scale: 1 },
+        {
+          scale: 1.12,
+          duration: duration(0.22),
+          yoyo: true,
+          repeat: 1,
+          ease: 'power2.out',
+          clearProps: 'transform',
+        },
+      )
+    }
+    else if (originEl && reduced) {
+      const pulseTarget =
+        originEl.querySelector<HTMLElement>('[data-podium-avatar]') ?? originEl
+      gsap.fromTo(
+        pulseTarget,
+        { scale: 1 },
+        {
+          scale: 1.06,
+          duration: 0.2,
+          yoyo: true,
+          repeat: 1,
+          ease: 'power1.out',
+          clearProps: 'transform',
+        },
+      )
+    }
+
+    if (!reduced) {
+      confetti({
+        origin: { x: originX, y: originY },
+        zIndex: 80,
+        particleCount: 56,
+        spread: 78,
+        startVelocity: 28,
+        ticks: 150,
+        scalar: 1.05,
+        disableForReducedMotion: true,
+        colors: ['#15803D', '#84CC16', '#CA8A04', '#FACC15', '#FDE047', '#ffffff'],
+      })
+      confetti({
+        origin: { x: originX, y: Math.min(0.95, originY + 0.06) },
+        zIndex: 80,
+        particleCount: 24,
+        spread: 360,
+        startVelocity: 14,
+        ticks: 100,
+        scalar: 0.85,
+        disableForReducedMotion: true,
+        colors: ['#FDE047', '#FACC15', '#84CC16', '#ffffff'],
+      })
+    }
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        sprintEggTimeline = null
+        options.onComplete?.()
+      },
+    })
+    sprintEggTimeline = tl
+
+    if (caption) {
+      tl.fromTo(
+        caption,
+        { opacity: 0, y: reduced ? 0 : -12, scale: reduced ? 1 : 0.92, xPercent: -50 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          xPercent: -50,
+          duration: duration(reduced ? 0.25 : 0.45),
+          ease: 'back.out(1.8)',
+        },
+        0,
+      )
+      tl.to(
+        caption,
+        {
+          opacity: 0,
+          y: reduced ? 0 : -8,
+          xPercent: -50,
+          duration: duration(0.35),
+          ease: 'power2.in',
+        },
+        reduced ? 1.4 : 2.6,
+      )
+    }
+
+    if (!reduced && runners.length) {
+      const vw = window.innerWidth
+      runners.forEach((runner, i) => {
+        const lane = Number(runner.dataset.lane ?? i)
+        const startX = -80 - i * 40
+        const endX = vw + 80
+        const dur = 1.6 + (i % 3) * 0.22
+        const delay = 0.08 + i * 0.12
+
+        gsap.set(runner, {
+          x: startX,
+          y: 0,
+          opacity: 1,
+          scale: 0.85 + (lane % 3) * 0.08,
+        })
+
+        tl.to(
+          runner,
+          {
+            x: endX,
+            duration: duration(dur),
+            ease: 'power1.in',
+            opacity: 1,
+          },
+          delay,
+        )
+      })
+    }
+    else if (runners.length) {
+      gsap.set(runners, { opacity: 0 })
+    }
+
+    if (!reduced && cals.length) {
+      const baseLeft = originRect
+        ? originRect.left + originRect.width / 2
+        : window.innerWidth / 2
+      const baseTop = originRect
+        ? originRect.top + originRect.height * 0.2
+        : window.innerHeight * 0.35
+
+      cals.forEach((chip, i) => {
+        const angle = (i / cals.length) * Math.PI * 2
+        const radius = 28 + (i % 4) * 18
+        const startX = baseLeft + Math.cos(angle) * radius - 24
+        const startY = baseTop + Math.sin(angle) * (radius * 0.35)
+        const driftX = (i % 2 === 0 ? 1 : -1) * (20 + (i % 5) * 12)
+
+        gsap.set(chip, {
+          left: startX,
+          top: startY,
+          x: 0,
+          y: 0,
+          opacity: 0,
+          scale: 0.6,
+        })
+
+        tl.to(
+          chip,
+          {
+            opacity: 1,
+            scale: 1,
+            duration: duration(0.25),
+            ease: 'back.out(2)',
+          },
+          0.15 + i * 0.05,
+        )
+        tl.to(
+          chip,
+          {
+            y: -(90 + (i % 4) * 28),
+            x: driftX,
+            opacity: 0,
+            duration: duration(1.4 + (i % 3) * 0.15),
+            ease: 'power2.out',
+          },
+          0.2 + i * 0.05,
+        )
+      })
+    }
+    else if (cals.length) {
+      gsap.set(cals, { opacity: 0 })
+    }
+
+    if (!caption && reduced) {
+      tl.to({}, { duration: 0.4 })
+    }
+    else if (!caption) {
+      tl.to({}, { duration: 3.4 })
+    }
+
+    return tl
+  }
+
   function parallaxBlobs(
     blobs: HTMLElement[],
     mouseX: Ref<number>,
@@ -539,6 +765,7 @@ export function useLeaderboardAnimations() {
     staggerIn,
     revealPodium,
     playPodiumEntrance,
+    playChampionSprintEgg,
     revealListRows,
     crossfadePanel,
     floatElement,
