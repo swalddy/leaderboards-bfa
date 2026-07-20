@@ -1,4 +1,5 @@
 import {
+  COMPANY_SHORT_LABELS,
   REFRESH_INTERVAL_MS,
   type CompanySlug,
 } from '~/constants/leaderboard'
@@ -52,7 +53,7 @@ async function runInitialProgressRamp(
 }
 
 export interface UseLeaderboardOptions {
-  companySlug: CompanySlug
+  companySlug?: CompanySlug
   nameAllowlist?: readonly string[]
   companyLabelOverride?: string
   stateKey?: string
@@ -60,14 +61,25 @@ export interface UseLeaderboardOptions {
 
 export function useLeaderboard(options: UseLeaderboardOptions) {
   const { companySlug, nameAllowlist, companyLabelOverride, stateKey } = options
-  const lockedCompany = resolveCompanyFromSlug(companySlug)
-  const companyLabel = companyLabelOverride ?? companyShortLabel(companySlug)
-  const filterStateKey = stateKey ?? companySlug
+  const isCompanyLocked = companySlug !== undefined
+  const lockedCompany = companySlug ? resolveCompanyFromSlug(companySlug) : undefined
+  const filterStateKey = stateKey ?? companySlug ?? 'all'
 
   const genderFilter = useState<GenderFilter>(`lb-gender-${filterStateKey}`, () => 'all')
-  const companyFilter = computed<CompanyFilter>(() => lockedCompany)
+  const companyFilter = useState<CompanyFilter>(
+    `lb-company-${filterStateKey}`,
+    () => (isCompanyLocked ? lockedCompany! : 'all'),
+  )
   const searchQuery = useState<string>(`lb-search-${filterStateKey}`, () => '')
   const sortBy = useState<SortBy>(`lb-sort-${filterStateKey}`, () => 'points')
+
+  const companyLabel = computed(() => {
+    if (companyLabelOverride) return companyLabelOverride
+    if (isCompanyLocked && companySlug) return companyShortLabel(companySlug)
+    const filter = companyFilter.value
+    if (filter === 'all') return 'Biopharma'
+    return COMPANY_SHORT_LABELS[filter] ?? filter
+  })
   const lastUpdatedAt = useState<Date | null>('lb-updated', () => null)
   const loadProgress = ref(0)
   const loadStage = ref<LeaderboardLoadStage>('idle')
@@ -155,6 +167,13 @@ export function useLeaderboard(options: UseLeaderboardOptions) {
   const isLoading = computed(() => !hasLoaded.value && !error.value)
   const hasError = computed(() => !!error.value)
 
+  // When company is locked, always enforce the locked value
+  watch(companyFilter, (val) => {
+    if (isCompanyLocked && lockedCompany && val !== lockedCompany) {
+      companyFilter.value = lockedCompany
+    }
+  })
+
   const filteredBeforeSearch = computed(() => {
     let result = [...baseEntries.value]
     result = applyCompanyFilter(result, companyFilter.value)
@@ -210,7 +229,7 @@ export function useLeaderboard(options: UseLeaderboardOptions) {
     companySlug,
     companyLabel,
     companyFullName: lockedCompany,
-    isCompanyLocked: true as const,
+    isCompanyLocked,
     genderFilter,
     companyFilter,
     searchQuery,

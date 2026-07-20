@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowLeft, Flame, Leaf } from 'lucide-vue-next'
+import { ArrowLeft, Leaf } from 'lucide-vue-next'
 
 defineProps<{
   lastUpdatedAt?: Date | null
@@ -11,10 +11,7 @@ const { fadeSlideDown, runAfterPaint } = useLeaderboardAnimations()
 
 function formatTime(value: Date | null | undefined) {
   if (!value) return null
-  return new Intl.DateTimeFormat('en-GB', {
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(value)
+  return new Intl.DateTimeFormat('id-ID', { hour: '2-digit', minute: '2-digit' }).format(value)
 }
 
 runAfterPaint(() => {
@@ -30,54 +27,45 @@ runAfterPaint(() => {
 <template>
   <header
     ref="rootRef"
-    class="sticky top-0 z-40 border-b border-slate-100 bg-white/80 backdrop-blur-2xl backdrop-saturate-150"
+    class="lb-header sticky top-0 z-40"
   >
-    <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-2 sm:gap-3 sm:px-5 sm:py-2.5 lg:px-6">
-      <div data-enter class="flex min-w-0 items-center gap-2 sm:gap-2.5">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:gap-3 sm:px-5 sm:py-3.5 lg:px-6">
+      <div data-enter class="flex min-w-0 items-center gap-2.5 sm:gap-3">
         <div
-          class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-kalbe-lime to-kalbe-green shadow-lime"
+          class="lb-logo-icon flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
           aria-hidden="true"
         >
-          <Leaf class="h-4 w-4 text-white" stroke-width="2.5" />
+          <img src="/bio_logo.png" class="h-[18px] w-[18px] object-contain" />
         </div>
         <div class="min-w-0">
-          <p class="text-[9px] font-semibold uppercase tracking-widest text-kalbe-green sm:text-2xs">
-            Donor Kalori
+          <p class="text-[9px] font-semibold uppercase tracking-[0.2em] text-green-600 sm:text-2xs">
+            Kalbe Donor Kalori
           </p>
-          <h1 class="truncate text-sm font-bold text-kalbe-green-dark sm:text-base">
+          <h1 class="truncate text-sm font-bold text-slate-900 sm:text-base">
             Leaderboard
-            <span
-              v-if="companyLabel"
-              class="font-semibold text-kalbe-green"
-            >
+            <span v-if="companyLabel" class="font-normal text-green-600">
               · {{ companyLabel }}
             </span>
           </h1>
         </div>
       </div>
 
-      <div data-enter class="flex shrink-0 items-center gap-1.5 sm:gap-2">
+      <div data-enter class="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+        <p v-if="lastUpdatedAt" class="hidden text-[10px] text-slate-500 sm:block">
+          Updated {{ formatTime(lastUpdatedAt) }}
+        </p>
         <NuxtLink
           to="/"
-          class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-medium text-slate-500 transition-colors hover:bg-kalbe-mint hover:text-kalbe-green-deep sm:text-2xs"
+          class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 sm:text-2xs"
         >
           <ArrowLeft class="h-3 w-3" aria-hidden="true" />
-          <span class="hidden sm:inline">Ganti</span>
+          <span class="hidden sm:inline">Kembali</span>
         </NuxtLink>
-        <p
-          v-if="lastUpdatedAt"
-          class="hidden text-[10px] text-slate-400 sm:block"
-        >
-          {{ formatTime(lastUpdatedAt) }}
-        </p>
-        <span
-          class="inline-flex items-center gap-1 rounded-full bg-kalbe-mint px-2 py-1 text-[10px] font-semibold text-kalbe-green-deep ring-1 ring-kalbe-green/10 sm:text-2xs"
-        >
+        <span class="lb-live-badge inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold sm:text-2xs">
           <span class="relative flex h-1.5 w-1.5">
-            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-kalbe-green opacity-50" />
-            <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-kalbe-green" />
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+            <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-400" />
           </span>
-          <Flame class="h-2.5 w-2.5 text-kalbe-green" aria-hidden="true" />
           Live
         </span>
       </div>

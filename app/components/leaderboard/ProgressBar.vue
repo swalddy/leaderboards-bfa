@@ -2,9 +2,7 @@
 const props = withDefaults(defineProps<{
   percent: number
   label?: string
-}>(), {
-  label: 'Progress toward leader',
-})
+}>(), { label: 'Progress toward leader' })
 
 const barRef = ref<HTMLElement | null>(null)
 const { animateProgress } = useLeaderboardAnimations()
@@ -19,7 +17,7 @@ watch(() => props.percent, syncWidth)
 
 <template>
   <div
-    class="h-0.5 w-full overflow-hidden rounded-full bg-slate-100 sm:h-1"
+    class="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner"
     role="progressbar"
     :aria-valuenow="Math.round(percent)"
     aria-valuemin="0"
@@ -28,7 +26,7 @@ watch(() => props.percent, syncWidth)
   >
     <div
       ref="barRef"
-      class="h-full w-0 rounded-full bg-gradient-to-r from-kalbe-green to-kalbe-lime"
+      class="h-full w-0 rounded-full bg-gradient-to-r from-green-400 to-green-500 shadow-[0_0_8px_rgba(34,197,94,0.28)] motion-safe:animate-[lb-progress-pulse_4s_ease-in-out_infinite]"
     />
   </div>
 </template>

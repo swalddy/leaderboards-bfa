@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Activity, Crown, Medal, TrendingUp } from 'lucide-vue-next'
+import { TrendingUp, Activity } from 'lucide-vue-next'
 import type { LeaderboardEntry } from '~/types/leaderboard'
 import { HEART_RATE_CALORIES_LABEL } from '~/constants/leaderboard'
 import { avatarColorFromName, getInitials, isDeveloperEmployee } from '~/utils/leaderboard'
@@ -12,7 +12,6 @@ const props = defineProps<{
   animationKey?: number
 }>()
 
-const displayName = computed(() => props.entry.employeeName.trim())
 const isDeveloper = computed(() => isDeveloperEmployee(props.entry.employeeName))
 const initials = computed(() => getInitials(props.entry.employeeName))
 const avatarBg = computed(() => avatarColorFromName(props.entry.employeeName))
@@ -23,9 +22,7 @@ const mainCounterKey = computed(() => `main-${props.animationKey}-${props.entry.
 const hrCounterKey = computed(() => `hr-${props.animationKey}-${props.entry.employeeId}`)
 const isChampion = computed(() => props.place === 1)
 
-const emit = defineEmits<{
-  'easter-egg': []
-}>()
+const emit = defineEmits<{ 'easter-egg': [] }>()
 
 function onChampionActivate() {
   if (!isChampion.value) return
@@ -41,39 +38,41 @@ function onChampionKeydown(event: KeyboardEvent) {
 }
 
 const theme = computed(() => {
-  if (props.place === 1) {
-    return {
-      block: 'podium-block--gold',
-      ring: 'podium-avatar-ring--gold',
-      avatar: 'h-12 w-12 text-sm sm:h-[4.5rem] sm:w-[4.5rem] sm:text-xl md:h-20 md:w-20 md:text-2xl',
-      medal: 'podium-medal--gold',
-      label: '1st',
-      lift: 'sm:-translate-y-4',
-      info: 'podium-info-card--gold',
-      score: 'text-sm sm:text-lg md:text-xl',
-    }
+  if (props.place === 1) return {
+    card: 'lb-podium-card--gold',
+    border: 'border-[#F59E0B]',
+    avatarSize: 'h-24 w-24 text-3xl sm:h-28 sm:w-28 sm:text-4xl',
+    avatarRing: 'lb-avatar-ring--gold',
+    medalClass: 'lb-medal--gold',
+    rankLabel: 'Champion',
+    scoreClass: 'lb-score--gold text-2xl sm:text-3xl',
+    nameClass: 'text-base font-bold sm:text-lg',
+    metaClass: 'text-xs',
+    padding: 'px-5 pb-7 pt-5 sm:px-6',
   }
-  if (props.place === 2) {
-    return {
-      block: 'podium-block--silver',
-      ring: 'podium-avatar-ring--silver',
-      avatar: 'h-8 w-8 text-[9px] sm:h-12 sm:w-12 sm:text-sm md:h-14 md:w-14 md:text-base',
-      medal: 'podium-medal--silver',
-      label: '2nd',
-      lift: '',
-      info: 'podium-info-card--silver',
-      score: 'text-[11px] sm:text-sm md:text-base',
-    }
+  if (props.place === 2) return {
+    card: 'lb-podium-card--silver',
+    border: 'border-[#94A3B8]',
+    avatarSize: 'h-12 w-12 text-base sm:h-16 sm:w-16 sm:text-xl',
+    avatarRing: 'lb-avatar-ring--silver',
+    medalClass: 'lb-medal--silver',
+    rankLabel: '2nd',
+    scoreClass: 'lb-score--silver text-base sm:text-lg',
+    nameClass: 'text-xs font-bold sm:text-sm',
+    metaClass: 'text-[10px] sm:text-[11px]',
+    padding: 'px-2.5 pb-3.5 pt-3 sm:px-4 sm:pb-5 sm:pt-4',
   }
   return {
-    block: 'podium-block--bronze',
-    ring: 'podium-avatar-ring--bronze',
-    avatar: 'h-8 w-8 text-[9px] sm:h-12 sm:w-12 sm:text-sm md:h-14 md:w-14 md:text-base',
-    medal: 'podium-medal--bronze',
-    label: '3rd',
-    lift: '',
-    info: 'podium-info-card--bronze',
-    score: 'text-[11px] sm:text-sm md:text-base',
+    card: 'lb-podium-card--bronze',
+    border: 'border-[#FB923C]',
+    avatarSize: 'h-12 w-12 text-base sm:h-14 sm:w-14 sm:text-lg',
+    avatarRing: 'lb-avatar-ring--bronze',
+    medalClass: 'lb-medal--bronze',
+    rankLabel: '3rd',
+    scoreClass: 'lb-score--bronze text-base sm:text-lg',
+    nameClass: 'text-xs font-bold sm:text-sm',
+    metaClass: 'text-[10px] sm:text-[11px]',
+    padding: 'px-2.5 pb-3.5 pt-3 sm:px-4 sm:pb-5 sm:pt-4',
   }
 })
 </script>
@@ -81,100 +80,77 @@ const theme = computed(() => {
 <template>
   <article
     class="podium-card w-full min-w-0"
-    :class="[
-      theme.lift,
-      isChampion && 'podium-card--champion cursor-pointer select-none',
-    ]"
+    :class="isChampion && 'cursor-pointer select-none'"
     :role="isChampion ? 'button' : undefined"
     :tabindex="isChampion ? 0 : undefined"
     :title="isChampion ? 'Psst… tap the champion' : undefined"
-    :aria-label="`Rank ${entry.rank}, ${displayName}${isDeveloper ? ' IT' : ''}, ${entry.currentPoints} calories`"
+    :aria-label="`Rank ${entry.rank}, ${entry.employeeName.trim()}${isDeveloper ? ' IT' : ''}, ${entry.currentPoints} calories`"
     @click="onChampionActivate"
     @keydown="onChampionKeydown"
   >
     <div
-      v-if="isChampion"
-      data-podium-crown
-      class="podium-champion-crown"
-      aria-hidden="true"
+      class="relative overflow-hidden rounded-2xl text-center transition-all duration-300 ease-out"
+      :class="[theme.card, theme.padding]"
     >
-      <Crown class="podium-champion-crown__icon" />
-    </div>
-
-    <div data-podium-medal class="mb-1 flex justify-center sm:mb-1.5">
-      <div
-        class="podium-medal inline-flex items-center gap-0.5 rounded-full font-bold"
-        :class="[
-          theme.medal,
-          isChampion
-            ? 'h-6 gap-1 px-2.5 text-[9px] sm:h-8 sm:gap-1.5 sm:px-3.5 sm:text-xs'
-            : 'h-5 gap-0.5 px-1.5 text-[8px] sm:h-7 sm:gap-1 sm:px-2.5 sm:text-2xs',
-        ]"
-      >
-        <Crown v-if="isChampion" class="h-3 w-3 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
-        <Medal v-else class="h-2.5 w-2.5 shrink-0 sm:h-3.5 sm:w-3.5" aria-hidden="true" />
-        <span v-if="isChampion" class="tracking-wide">Champion</span>
-        <span v-else>{{ theme.label }}</span>
-      </div>
-    </div>
-
-    <div
-      class="relative mx-auto mb-1.5 w-fit sm:mb-2.5"
-      :class="isChampion && 'podium-champion-avatar-wrap'"
-    >
-      <template v-if="isChampion">
-        <span class="podium-champion-rays" data-podium-rays aria-hidden="true" />
-        <span class="podium-champion-aura" aria-hidden="true" />
-        <span class="podium-champion-sparkle podium-champion-sparkle--1" aria-hidden="true" />
-        <span class="podium-champion-sparkle podium-champion-sparkle--2" aria-hidden="true" />
-        <span class="podium-champion-sparkle podium-champion-sparkle--3" aria-hidden="true" />
-        <span class="podium-champion-sparkle podium-champion-sparkle--4" aria-hidden="true" />
-      </template>
-
-      <div
-        data-podium-avatar
-        class="podium-avatar relative z-[1] flex shrink-0 items-center justify-center rounded-full font-bold text-white"
-        :class="[theme.avatar, theme.ring, isChampion && 'podium-avatar--champion']"
-        :style="{ background: avatarBg }"
-        aria-hidden="true"
-      >
-        {{ initials }}
-      </div>
-      <LeaderboardEmployeeName
-        v-if="isDeveloper"
-        :name="entry.employeeName"
-        size="podium"
-        badge-only
-        class="absolute -bottom-0.5 -right-1 z-10 sm:-bottom-1 sm:-right-1"
-      />
-    </div>
-
-    <div
-      data-podium-info
-      class="podium-info-card mb-1.5 w-full rounded-lg sm:mb-2.5 sm:rounded-xl sm:px-2.5 sm:py-2"
-      :class="[theme.info, isChampion && 'podium-info-card--champion']"
-    >
-      <div class="flex justify-center px-0.5">
-        <LeaderboardEmployeeName
-          :name="entry.employeeName"
-          size="podium"
-          multiline
-          centered
-          hide-badge
-        />
+      <!-- Medal badge -->
+      <div class="mb-4 flex justify-center">
+        <span
+          class="lb-medal inline-flex items-center gap-1.5 rounded-full font-bold shadow-sm"
+          :class="[theme.medalClass, isChampion ? 'px-4 py-1.5 text-sm' : 'px-3 py-1 text-xs']"
+        >
+          <span v-if="isChampion" class="text-base">👑</span>
+          <span v-else-if="place === 2" class="text-sm">🥈</span>
+          <span v-else class="text-sm">🥉</span>
+          {{ theme.rankLabel }}
+        </span>
       </div>
 
-      <p
-        data-podium-score
-        class="score-text mt-1 flex items-center justify-center gap-0.5 font-bold sm:mt-1.5 sm:gap-1"
-        :class="theme.score"
-      >
-        <TrendingUp
-          class="h-2.5 w-2.5 shrink-0 sm:h-3.5 sm:w-3.5"
-          :class="isChampion ? 'text-amber-500' : 'text-kalbe-lime'"
-          aria-hidden="true"
-        />
-        <span :class="isChampion && 'podium-score--champion'">
+      <!-- Avatar with laurel for champion -->
+      <div class="mb-4 flex justify-center">
+        <div class="relative">
+          <!-- Laurel wreath for champion -->
+          <div v-if="isChampion" class="lb-laurel-wrap" aria-hidden="true">
+            <span class="lb-laurel lb-laurel--left">🌿</span>
+            <span class="lb-laurel lb-laurel--right">🌿</span>
+          </div>
+          <div
+            data-podium-avatar
+            class="flex shrink-0 items-center justify-center rounded-full font-bold text-white"
+            :class="[theme.avatarSize, theme.avatarRing]"
+            :style="{ background: avatarBg }"
+            aria-hidden="true"
+          >
+            {{ initials }}
+          </div>
+          <LeaderboardEmployeeName
+            v-if="isDeveloper"
+            :name="entry.employeeName"
+            size="podium"
+            badge-only
+            class="absolute -bottom-0.5 -right-1 z-10"
+          />
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div :class="isChampion ? 'mb-4' : 'mb-3'">
+        <p class="leading-snug text-slate-900" :class="[theme.nameClass, isChampion ? 'line-clamp-2' : 'truncate']">
+          {{ entry.employeeName.trim() }}
+        </p>
+        <div class="mt-2 flex flex-wrap items-center justify-center gap-1">
+          <LeaderboardCompanyBadge :company="entry.company" compact />
+          <LeaderboardCategoryBadge :category="entry.category" />
+        </div>
+      </div>
+
+      <!-- Score -->
+      <div>
+        <p
+          data-podium-score
+          class="flex items-center justify-center gap-1.5 font-display font-bold tabular-nums"
+          :class="theme.scoreClass"
+        >
+          <TrendingUp class="h-4 w-4 shrink-0 text-kalbe-green" aria-hidden="true" />
           <LeaderboardAnimatedCounter
             :key="mainCounterKey"
             :value="entry.currentPoints"
@@ -182,43 +158,18 @@ const theme = computed(() => {
             :start-delay="scoreStartDelay"
             :duration="2.4"
           />
-        </span>
-      </p>
-
-      <p class="mt-1 flex items-center justify-center gap-0.5 text-[8px] text-slate-400 sm:text-[10px]">
-        <Activity class="h-2 w-2 shrink-0 text-slate-300 sm:h-2.5 sm:w-2.5" aria-hidden="true" />
-        <span class="sm:hidden">HR</span>
-        <span class="hidden sm:inline">{{ HEART_RATE_CALORIES_LABEL }}</span>
-        <LeaderboardAnimatedCounter
-          :key="hrCounterKey"
-          :value="entry.totalPoints"
-          :play="countersReady"
-          :start-delay="hrScoreStartDelay"
-          :duration="1.8"
-        />
-      </p>
-
-      <div class="mt-1 hidden flex-wrap items-center justify-center gap-1 sm:mt-1.5 sm:flex">
-        <LeaderboardCompanyBadge :company="entry.company" compact />
-        <LeaderboardCategoryBadge :category="entry.category" />
-      </div>
-    </div>
-
-    <div
-      data-podium-block-wrap
-      class="w-full overflow-hidden rounded-b-xl"
-      :class="isChampion && 'podium-block-wrap--champion'"
-    >
-      <div
-        data-podium-block
-        class="podium-block w-full origin-bottom"
-        :class="theme.block"
-        aria-hidden="true"
-      >
-        <span
-          class="podium-block-rank font-display font-extrabold"
-          :class="isChampion ? 'text-xl sm:text-3xl md:text-4xl' : 'text-base sm:text-xl md:text-2xl'"
-        >{{ place }}</span>
+        </p>
+        <p class="mt-1 flex items-center justify-center gap-0.5 text-slate-400" :class="theme.metaClass">
+          <Activity class="h-3 w-3 shrink-0" aria-hidden="true" />
+          {{ HEART_RATE_CALORIES_LABEL }}
+          <LeaderboardAnimatedCounter
+            :key="hrCounterKey"
+            :value="entry.totalPoints"
+            :play="countersReady"
+            :start-delay="hrScoreStartDelay"
+            :duration="1.8"
+          />
+        </p>
       </div>
     </div>
   </article>

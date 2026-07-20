@@ -4,9 +4,7 @@ import { entryKey } from '~/utils/leaderboard'
 
 const PAGE_SIZE = 15
 
-const props = defineProps<{
-  entries: LeaderboardEntry[]
-}>()
+const props = defineProps<{ entries: LeaderboardEntry[] }>()
 
 const rootRef = ref<HTMLElement | null>(null)
 const listRef = ref<HTMLElement | null>(null)
@@ -28,27 +26,17 @@ function onPageChange(page: number) {
   })
 }
 
-const totalPages = computed(() =>
-  Math.max(1, Math.ceil(props.entries.length / PAGE_SIZE)),
-)
-
+const totalPages = computed(() => Math.max(1, Math.ceil(props.entries.length / PAGE_SIZE)))
 const paginatedEntries = computed(() => {
   const start = (currentPage.value - 1) * PAGE_SIZE
   return props.entries.slice(start, start + PAGE_SIZE)
 })
 
-watch(totalPages, (total) => {
-  if (currentPage.value > total) currentPage.value = total
-})
+watch(totalPages, (total) => { if (currentPage.value > total) currentPage.value = total })
 
 function animateListEntrance() {
   if (!rootRef.value) return
-  fadeSlideUp(rootRef.value.querySelectorAll('[data-list-header]'), {
-    y: 16,
-    stagger: 0.06,
-    delay: 0.35,
-    duration: 0.5,
-  })
+  fadeSlideUp(rootRef.value.querySelectorAll('[data-list-header]'), { y: 16, stagger: 0.06, delay: 0.35, duration: 0.5 })
   revealListRows(listRef.value)
 }
 
@@ -69,27 +57,23 @@ watch(paginatedEntries, () => {
     aria-labelledby="list-heading"
     class="mx-auto w-full max-w-7xl px-3 pb-10 sm:px-5 lg:px-6"
   >
-    <div data-list-header class="section-divider mb-2">
-      <h2
-        id="list-heading"
-        class="shrink-0 text-[10px] font-semibold uppercase tracking-widest text-kalbe-green sm:text-2xs"
-      >
-        Top Ranking
-      </h2>
-    </div>
-
-    <div data-list-header class="mb-2 flex items-center justify-between gap-2">
-      <p class="text-[10px] text-slate-400 sm:text-xs">
-        Ranked by current calories
-      </p>
-      <span class="rounded-full bg-kalbe-mint px-2 py-0.5 text-[9px] font-semibold text-kalbe-green-deep sm:text-2xs">
+    <div data-list-header class="mb-3 flex items-center justify-between gap-2">
+      <div>
+        <p class="text-[9px] font-semibold uppercase tracking-[0.2em] text-green-400/60 sm:text-2xs">
+          Rankings
+        </p>
+        <h2 id="list-heading" class="mt-0.5 text-base font-bold text-white sm:text-lg">
+          All Rankings
+        </h2>
+      </div>
+      <span class="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-semibold text-white/50 sm:text-xs">
         {{ entries.length }} competitors
       </span>
     </div>
 
     <div
       ref="listRef"
-      class="flex flex-col gap-1.5"
+      class="lb-card overflow-hidden rounded-xl divide-y divide-white/5"
     >
       <LeaderboardRow
         v-for="entry in paginatedEntries"

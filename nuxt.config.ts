@@ -17,7 +17,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Kalbe Donor Kalori Leaderboard',
+      title: 'Kalbe Donor Kalori Leaderboard - Biopharma',
       meta: [
         {
           name: 'description',

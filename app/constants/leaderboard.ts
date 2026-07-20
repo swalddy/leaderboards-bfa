@@ -1,15 +1,25 @@
 export const ALLOWED_COMPANIES = [
-  'PT Agroveta Husada Dharma',
-  'Corporate Function',
-  'PT Global Chemindo Megatrading',
+  'PT Bifarma Adiluhung',
+  'PT Innolab Sains Internasional',
+  'PT Kalbio Global Medika',
+  'Stem Cell & Cancer Institute',
+  'Innogene Kalbiotech Pte Ltd',
+  'PT Pharma Metric Labs',
+  'PT Kalbe Genexine Biologics',
+  'PT Kalgen DNA',
 ] as const
 
 export type AllowedCompany = (typeof ALLOWED_COMPANIES)[number]
 
 export const COMPANY_ROUTES = {
-  agroveta: 'PT Agroveta Husada Dharma',
-  corporate: 'Corporate Function',
-  gcm: 'PT Global Chemindo Megatrading',
+  BFA: 'PT Bifarma Adiluhung',
+  ISI: 'PT Innolab Sains Internasional',
+  KGM: 'PT Kalbio Global Medika',
+  SCI: 'Stem Cell & Cancer Institute',
+  IGK: 'Innogene Kalbiotech Pte Ltd',
+  PML: 'PT Pharma Metric Labs',
+  KGBio: 'PT Kalbe Genexine Biologics',
+  KDNA: 'PT Kalgen DNA',
 } as const
 
 export type CompanySlug = keyof typeof COMPANY_ROUTES
@@ -27,9 +37,14 @@ export const REFRESH_INTERVAL_MS = 60_000
 export const MIN_SPLASH_MS = 3_000
 
 export const COMPANY_SHORT_LABELS: Record<AllowedCompany, string> = {
-  'PT Agroveta Husada Dharma': 'PT Agroveta Husada Dharma',
-  'Corporate Function': 'Corporate',
-  'PT Global Chemindo Megatrading': 'PT Global Chemindo Megatrading',
+  'PT Bifarma Adiluhung': 'BFA',
+  'PT Innolab Sains Internasional': 'ISI',
+  'PT Kalbio Global Medika': 'KGM',
+  'Stem Cell & Cancer Institute': 'SCI',
+  'Innogene Kalbiotech Pte Ltd': 'IGK',
+  'PT Pharma Metric Labs': 'PML',
+  'PT Kalbe Genexine Biologics': 'KGBio',
+  'PT Kalgen DNA': 'KDNA',
 }
 
 /** Label for calories calculated from heart rate data (API `total_points`). */

@@ -32,11 +32,8 @@
 
   body {
     @apply min-h-screen font-sans text-[15px] leading-relaxed;
-    color: var(--text-main);
-    background-color: var(--bg-page);
-    background-image:
-      radial-gradient(ellipse 70% 45% at 50% -5%, rgba(132, 204, 22, 0.12), transparent 60%),
-      radial-gradient(ellipse 40% 30% at 100% 0%, rgba(56, 189, 248, 0.08), transparent 50%);
+    color: #0f172a;
+    background-color: #F8FAFC;
   }
 
   h1, h2, h3 {
@@ -69,486 +66,469 @@
     box-shadow: var(--shadow-soft);
   }
 
-  .podium-arena {
-    @apply relative overflow-hidden rounded-xl border border-emerald-200/70 sm:rounded-2xl;
-    background:
-      radial-gradient(ellipse 70% 60% at 50% 18%, rgba(253, 224, 71, 0.28), transparent 58%),
-      radial-gradient(ellipse 80% 55% at 50% -10%, rgba(250, 204, 21, 0.18), transparent 55%),
-      linear-gradient(165deg, #F0FDF4 0%, #ECFDF5 42%, #D1FAE5 100%);
-    box-shadow:
-      var(--shadow-card),
-      inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  /* ── Premium light page background ── */
+  .lb-page-bg {
+    background-color: #F8FAFC;
+    background-image:
+      radial-gradient(ellipse 42% 24% at 50% 14%, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.88) 38%, transparent 72%),
+      radial-gradient(ellipse 34% 22% at 18% 10%, rgba(34,197,94,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 28% 20% at 82% 12%, rgba(251,191,36,0.10) 0%, transparent 68%),
+      radial-gradient(ellipse 40% 26% at 50% 82%, rgba(148,163,184,0.10) 0%, transparent 72%),
+      linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
   }
 
-  .podium-arena::before {
-    content: '';
+  /* ── Ambient glow orbs ── */
+  .lb-orb {
     position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 55% 40% at 50% 100%, rgba(21, 128, 61, 0.08), transparent 65%),
-      repeating-linear-gradient(
-        90deg,
-        rgba(21, 128, 61, 0.03) 0,
-        rgba(21, 128, 61, 0.03) 1px,
-        transparent 1px,
-        transparent 24px
-      );
-    pointer-events: none;
-  }
-
-  .podium-spotlight {
-    position: absolute;
-    left: 50%;
-    top: -8%;
-    z-index: 0;
-    width: min(52%, 280px);
-    height: 78%;
-    transform: translateX(-50%);
-    background: linear-gradient(
-      180deg,
-      rgba(254, 243, 199, 0.75) 0%,
-      rgba(253, 224, 71, 0.28) 28%,
-      rgba(250, 204, 21, 0.1) 55%,
-      transparent 88%
-    );
-    clip-path: polygon(28% 0%, 72% 0%, 100% 100%, 0% 100%);
-    filter: blur(1px);
-    animation: podium-spotlight-breathe 3.6s ease-in-out infinite;
-    pointer-events: none;
-  }
-
-  .podium-floor {
-    @apply relative z-[1] mx-2 mb-2 mt-1 h-1 rounded-full sm:mx-5 sm:mb-4 sm:h-1.5;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(21, 128, 61, 0.18) 15%,
-      rgba(250, 204, 21, 0.55) 50%,
-      rgba(21, 128, 61, 0.18) 85%,
-      transparent 100%
-    );
-    box-shadow:
-      0 2px 8px rgba(21, 128, 61, 0.12),
-      0 0 20px rgba(250, 204, 21, 0.25);
-  }
-
-  .podium-block {
-    position: relative;
-    width: 100%;
-    border-radius: 14px 14px 6px 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow:
-      inset 0 2px 0 rgba(255, 255, 255, 0.55),
-      inset 0 -3px 8px rgba(0, 0, 0, 0.08),
-      0 8px 24px rgba(0, 0, 0, 0.1);
-  }
-
-  .podium-block::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, transparent 38%);
-    pointer-events: none;
-  }
-
-  .podium-block-rank {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.55);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    pointer-events: none;
-  }
-
-  .podium-block--gold {
-    background: linear-gradient(180deg, #FEF9C3 0%, #FDE047 18%, #FACC15 40%, #CA8A04 72%, #854D0E 100%);
-    min-height: 3.75rem;
-    overflow: hidden;
-    box-shadow:
-      inset 0 2px 0 rgba(255, 255, 255, 0.65),
-      inset 0 -4px 12px rgba(133, 77, 14, 0.25),
-      0 10px 28px rgba(202, 138, 4, 0.35),
-      0 0 32px rgba(250, 204, 21, 0.2);
-  }
-
-  .podium-block--gold::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: linear-gradient(
-      105deg,
-      transparent 28%,
-      rgba(255, 255, 255, 0.7) 46%,
-      rgba(254, 249, 195, 0.85) 52%,
-      transparent 68%
-    );
-    background-size: 220% 100%;
-    animation: podium-gold-sheen 3.2s ease-in-out infinite;
-    mix-blend-mode: soft-light;
-    pointer-events: none;
-  }
-
-  .podium-block--gold .podium-block-rank {
-    color: rgba(255, 255, 255, 0.72);
-    text-shadow:
-      0 2px 4px rgba(120, 53, 15, 0.35),
-      0 0 18px rgba(254, 243, 199, 0.55);
-  }
-
-  .podium-block--silver {
-    background: linear-gradient(180deg, #F8FAFC 0%, #CBD5E1 35%, #64748B 72%, #475569 100%);
-    min-height: 2.35rem;
-  }
-
-  .podium-block--bronze {
-    background: linear-gradient(180deg, #FFEDD5 0%, #FB923C 35%, #B45309 72%, #92400E 100%);
-    min-height: 2rem;
-  }
-
-  @media (min-width: 640px) {
-    .podium-block--gold { min-height: 6.25rem; }
-    .podium-block--silver { min-height: 3.5rem; }
-    .podium-block--bronze { min-height: 2.75rem; }
-  }
-
-  .podium-block-wrap--champion {
-    filter: drop-shadow(0 8px 20px rgba(202, 138, 4, 0.35));
-  }
-
-  .podium-medal {
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
-  }
-
-  .podium-medal--gold {
-    background: linear-gradient(135deg, #FEF08A 0%, #FACC15 40%, #F59E0B 70%, #D97706 100%);
-    color: #fff;
-    box-shadow:
-      0 4px 16px rgba(202, 138, 4, 0.45),
-      0 0 0 1px rgba(255, 255, 255, 0.35) inset,
-      0 0 24px rgba(250, 204, 21, 0.35);
-    animation: podium-medal-pulse 2.4s ease-in-out infinite;
-  }
-
-  .podium-medal--gold::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(
-      115deg,
-      transparent 30%,
-      rgba(255, 255, 255, 0.65) 48%,
-      transparent 62%
-    );
-    background-size: 200% 100%;
-    animation: podium-medal-shimmer 2.4s ease-in-out infinite;
-    mix-blend-mode: soft-light;
-    pointer-events: none;
-  }
-
-  .podium-medal--silver {
-    background: linear-gradient(135deg, #F1F5F9 0%, #94A3B8 55%, #64748B 100%);
-    color: #fff;
-  }
-
-  .podium-medal--bronze {
-    background: linear-gradient(135deg, #FDBA74 0%, #EA580C 55%, #C2410C 100%);
-    color: #fff;
-    box-shadow: 0 3px 10px rgba(180, 83, 9, 0.28);
-  }
-
-  .podium-avatar-ring--gold {
-    box-shadow:
-      0 0 0 3px #fff,
-      0 0 0 6px #FDE047,
-      0 8px 24px rgba(202, 138, 4, 0.45),
-      0 0 28px rgba(250, 204, 21, 0.4);
-  }
-
-  .podium-avatar--champion.podium-avatar-ring--gold {
-    animation: podium-ring-breathe 2.4s ease-in-out infinite;
-  }
-
-  .podium-avatar-ring--silver {
-    box-shadow:
-      0 0 0 2px #fff,
-      0 0 0 3.5px #CBD5E1,
-      0 4px 14px rgba(100, 116, 139, 0.25);
-  }
-
-  .podium-avatar-ring--bronze {
-    box-shadow:
-      0 0 0 2px #fff,
-      0 0 0 3.5px #FDBA74,
-      0 4px 14px rgba(180, 83, 9, 0.25);
-  }
-
-  .podium-card {
-    @apply relative flex flex-col items-center text-center;
-  }
-
-  .podium-card--champion {
-    z-index: 2;
-    filter: drop-shadow(0 14px 36px rgba(202, 138, 4, 0.32));
-  }
-
-  .podium-card--champion:focus-visible {
-    outline: 2px solid #CA8A04;
-    outline-offset: 4px;
-  }
-
-  .podium-champion-avatar-wrap {
-    isolation: isolate;
-    margin-block: 0.35rem 0.75rem;
-  }
-
-  @media (min-width: 640px) {
-    .podium-champion-avatar-wrap {
-      margin-block: 0.5rem 1rem;
-    }
-  }
-
-  .podium-champion-crown {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0.15rem;
-    color: #EAB308;
-    filter: drop-shadow(0 2px 8px rgba(234, 179, 8, 0.55));
-    animation: podium-crown-bob 2.8s ease-in-out infinite;
-  }
-
-  .podium-champion-crown__icon {
-    width: 1.35rem;
-    height: 1.35rem;
-    fill: #FACC15;
-    stroke-width: 1.75;
-  }
-
-  @media (min-width: 640px) {
-    .podium-champion-crown__icon {
-      width: 1.85rem;
-      height: 1.85rem;
-    }
-  }
-
-  .podium-champion-aura {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 0;
-    width: 200%;
-    height: 200%;
     border-radius: 9999px;
-    background: radial-gradient(
-      circle,
-      rgba(253, 224, 71, 0.7) 0%,
-      rgba(250, 204, 21, 0.35) 32%,
-      rgba(202, 138, 4, 0.12) 58%,
-      transparent 74%
-    );
-    transform: translate(-50%, -50%) scale(0.9);
-    animation: podium-aura-pulse 2.4s ease-in-out infinite;
+    filter: blur(80px);
     pointer-events: none;
+    will-change: transform;
   }
 
-  .podium-champion-rays {
+  .lb-orb--green {
+    width: 600px;
+    height: 600px;
+    top: -100px;
+    left: -150px;
+    background: radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%);
+    animation: lb-orb-drift 18s ease-in-out infinite;
+  }
+
+  .lb-orb--lime {
+    width: 400px;
+    height: 400px;
+    top: 40%;
+    right: -100px;
+    background: radial-gradient(circle, rgba(132,204,22,0.10) 0%, transparent 70%);
+    animation: lb-orb-drift 24s ease-in-out infinite reverse;
+  }
+
+  .lb-orb--gold {
+    width: 300px;
+    height: 300px;
+    bottom: 20%;
+    left: 30%;
+    background: radial-gradient(circle, rgba(251,191,36,0.10) 0%, transparent 70%);
+    animation: lb-orb-drift 20s ease-in-out infinite 4s;
+  }
+
+  /* ── Header ── */
+  .lb-header {
+    background: rgba(248,250,252,0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(226,232,240,0.9);
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+  }
+
+  .lb-logo-icon {
+    background: linear-gradient(135deg, #15803D 0%, #166534 60%, #14532D 100%);
+    box-shadow: 0 0 16px rgba(21,128,61,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+
+  .lb-live-badge {
+    background: rgba(34,197,94,0.10);
+    color: #16A34A;
+    border: 1px solid rgba(34,197,94,0.20);
+    box-shadow: 0 1px 2px rgba(22,163,74,0.08);
+  }
+
+  /* ── Glass card base ── */
+  .lb-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 1px 3px rgba(15,23,42,0.06);
+  }
+
+  /* ── Stat card color variants ── */
+  .lb-card--green,
+  .lb-card--sky,
+  .lb-card--orange,
+  .lb-card--blue {
+    border-color: #E2E8F0;
+  }
+  .lb-card--green:hover,
+  .lb-card--sky:hover,
+  .lb-card--orange:hover,
+  .lb-card--blue:hover {
+    border-color: rgba(34,197,94,0.22);
+    box-shadow: 0 18px 45px rgba(15,23,42,0.10), 0 4px 12px rgba(15,23,42,0.06);
+  }
+
+  /* ── Stat value colors ── */
+  .lb-stat-green { color: #16A34A; }
+  .lb-stat-sky   { color: #0284C7; }
+  .lb-stat-orange { color: #EA580C; }
+  .lb-stat-blue  { color: #2563EB; }
+
+  /* ── Podium cards ── */
+  .lb-podium-card--gold {
+    background: linear-gradient(160deg, #FFFBEB 0%, #FEF3C7 40%, #FDE68A 100%);
+    border: 2.5px solid #F59E0B;
+    box-shadow:
+      0 0 0 5px rgba(251,191,36,0.18),
+      0 24px 70px rgba(245,158,11,0.32),
+      0 4px 16px rgba(15,23,42,0.08);
+    animation: lb-champion-float 4s ease-in-out infinite, lb-gold-pulse 3.2s ease-in-out infinite;
+    overflow: visible;
+  }
+
+  .lb-podium-card--gold::before {
+    content: '';
     position: absolute;
-    left: 50%;
-    top: 50%;
+    inset: -30%;
     z-index: 0;
-    width: 240%;
-    height: 240%;
-    transform: translate(-50%, -50%);
-    background: conic-gradient(
-      from 0deg,
-      transparent 0deg,
-      rgba(253, 224, 71, 0.35) 8deg,
-      transparent 16deg,
-      transparent 40deg,
-      rgba(250, 204, 21, 0.28) 48deg,
-      transparent 56deg,
-      transparent 80deg,
-      rgba(253, 224, 71, 0.32) 88deg,
-      transparent 96deg,
-      transparent 120deg,
-      rgba(250, 204, 21, 0.28) 128deg,
-      transparent 136deg,
-      transparent 160deg,
-      rgba(253, 224, 71, 0.3) 168deg,
-      transparent 176deg,
-      transparent 200deg,
-      rgba(250, 204, 21, 0.26) 208deg,
-      transparent 216deg,
-      transparent 240deg,
-      rgba(253, 224, 71, 0.32) 248deg,
-      transparent 256deg,
-      transparent 280deg,
-      rgba(250, 204, 21, 0.28) 288deg,
-      transparent 296deg,
-      transparent 320deg,
-      rgba(253, 224, 71, 0.3) 328deg,
-      transparent 336deg,
-      transparent 360deg
-    );
-    mask-image: radial-gradient(circle, transparent 22%, black 38%, black 55%, transparent 72%);
-    -webkit-mask-image: radial-gradient(circle, transparent 22%, black 38%, black 55%, transparent 72%);
-    animation: podium-rays-spin 14s linear infinite;
-    opacity: 0.85;
+    background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.65) 48%, rgba(255,255,255,0.30) 52%, transparent 65%);
+    transform: translateX(-75%) rotate(8deg);
+    animation: lb-shimmer-sweep 4.8s ease-in-out infinite;
     pointer-events: none;
   }
 
-  .podium-champion-sparkle {
+  .lb-podium-card--silver {
+    background: linear-gradient(160deg, #FFFFFF 0%, #F8FAFC 100%);
+    border: 1.5px solid #94A3B8;
+    box-shadow: 0 8px 28px rgba(100,116,139,0.14), 0 1px 3px rgba(15,23,42,0.06);
+  }
+
+  .lb-podium-card--bronze {
+    background: linear-gradient(160deg, #FFFFFF 0%, #FFF7ED 100%);
+    border: 1.5px solid #FB923C;
+    box-shadow: 0 8px 28px rgba(180,83,9,0.14), 0 1px 3px rgba(15,23,42,0.06);
+  }
+
+  /* ── Podium scene ── */
+  .lb-podium-scene {
+    background:
+      radial-gradient(ellipse 65% 45% at 50% 18%, rgba(255,255,255,0.88) 0%, rgba(248,250,252,0.78) 34%, rgba(248,250,252,0.98) 74%),
+      linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    border-color: rgba(226,232,240,0.96);
+    box-shadow:
+      0 1px 2px rgba(15,23,42,0.04),
+      0 18px 60px rgba(15,23,42,0.06);
+  }
+
+  .lb-podium-scene::before {
+    content: '';
     position: absolute;
-    z-index: 2;
-    width: 6px;
-    height: 6px;
-    border-radius: 1px;
-    background: #FEF08A;
-    box-shadow: 0 0 8px rgba(253, 224, 71, 0.9);
-    transform: rotate(45deg);
-    animation: podium-sparkle-twinkle 1.8s ease-in-out infinite;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(251,191,36,0.10) 0%, transparent 24%),
+      radial-gradient(circle at 20% 20%, rgba(34,197,94,0.08) 0%, transparent 18%),
+      radial-gradient(circle at 80% 18%, rgba(59,130,246,0.06) 0%, transparent 18%);
     pointer-events: none;
   }
 
-  .podium-champion-sparkle--1 {
-    top: 2%;
-    right: -6%;
-    animation-delay: 0s;
+  .lb-podium-aura {
+    position: absolute;
+    inset: auto 10% 0;
+    height: 44%;
+    border-radius: 9999px 9999px 0 0;
+    background: radial-gradient(ellipse at center, rgba(251,191,36,0.16) 0%, rgba(251,191,36,0.08) 26%, transparent 72%);
+    filter: blur(18px);
+    pointer-events: none;
   }
 
-  .podium-champion-sparkle--2 {
-    top: 28%;
-    left: -10%;
-    width: 5px;
-    height: 5px;
-    animation-delay: 0.45s;
+  .lb-podium-atom {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+    filter: blur(10px);
+    opacity: 0.8;
   }
 
-  .podium-champion-sparkle--3 {
-    bottom: 8%;
-    right: -4%;
-    width: 4px;
-    height: 4px;
-    animation-delay: 0.9s;
+  .lb-podium-atom--left {
+    width: 10rem;
+    height: 10rem;
+    left: -2rem;
+    top: 1rem;
+    background: radial-gradient(circle, rgba(34,197,94,0.10) 0%, transparent 72%);
   }
 
-  .podium-champion-sparkle--4 {
-    top: -4%;
-    left: 18%;
-    width: 5px;
-    height: 5px;
-    animation-delay: 1.2s;
+  .lb-podium-atom--right {
+    width: 11rem;
+    height: 11rem;
+    right: -2rem;
+    top: 1.25rem;
+    background: radial-gradient(circle, rgba(251,191,36,0.10) 0%, transparent 72%);
   }
 
-  .podium-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.22fr) minmax(0, 1fr);
-    align-items: end;
-    gap: 0.375rem;
+  .lb-champion-spotlight {
+    position: absolute;
+    inset: auto 12% -1.25rem;
+    height: 8rem;
+    border-radius: 9999px;
+    background: radial-gradient(ellipse at center, rgba(251,191,36,0.28) 0%, rgba(251,191,36,0.14) 28%, transparent 72%);
+    filter: blur(24px);
+    pointer-events: none;
+  }
+
+  /* ── Podium 3D steps ── */
+  .lb-step-3d {
+    border-radius: 0.75rem 0.75rem 0 0;
+    border-top: 1px solid rgba(255,255,255,0.6);
+    border-left: 1px solid rgba(255,255,255,0.4);
+    border-right: 1px solid rgba(255,255,255,0.4);
+  }
+
+  .lb-step-3d--gold {
+    background: linear-gradient(180deg, #FEF3C7 0%, #FCD34D 40%, #F59E0B 100%);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.55), 0 -4px 12px rgba(245,158,11,0.2);
+  }
+
+  .lb-step-3d--silver {
+    background: linear-gradient(180deg, #F1F5F9 0%, #CBD5E1 40%, #94A3B8 100%);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.6), 0 -4px 10px rgba(148,163,184,0.15);
+  }
+
+  .lb-step-3d--bronze {
+    background: linear-gradient(180deg, #FFEDD5 0%, #FDBA74 40%, #F97316 100%);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 -4px 10px rgba(249,115,22,0.15);
+  }
+
+  .lb-step-side {
     width: 100%;
+  }
+
+  .lb-step-side--gold {
+    background: linear-gradient(180deg, #D97706 0%, #B45309 100%);
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+
+  .lb-step-side--silver {
+    background: linear-gradient(180deg, #64748B 0%, #475569 100%);
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+
+  .lb-step-side--bronze {
+    background: linear-gradient(180deg, #EA580C 0%, #C2410C 100%);
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+
+  .lb-step-label-3d {
+    font-family: var(--font-display, 'Outfit', system-ui, sans-serif);
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .lb-step-label-3d--gold {
+    color: #78350F;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  }
+
+  .lb-step-label-3d--silver {
+    color: #1E293B;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+  }
+
+  .lb-step-label-3d--bronze {
+    color: #7C2D12;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  }
+
+  .lb-step-laurel {
+    font-size: 1.1rem;
+    line-height: 1;
+    opacity: 0.7;
+  }
+
+  .lb-step-laurel--flip {
+    transform: scaleX(-1);
+    display: inline-block;
+  }
+
+  .lb-step-laurel--gold { opacity: 0.65; }
+  .lb-step-laurel--silver { opacity: 0.55; }
+  .lb-step-laurel--bronze { opacity: 0.6; }
+
+  /* ── Podium platform (old, kept for compat) ── */
+  .lb-platform {
+    border-radius: 1.5rem 1.5rem 2rem 2rem;
+    border: 1px solid rgba(226,232,240,0.92);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(248,250,252,0.98) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.9),
+      0 14px 30px rgba(15,23,42,0.06);
+  }
+
+  .lb-step {
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.45);
+  }
+
+  .lb-step::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 18%, rgba(255,255,255,0.35) 50%, transparent 82%);
+    opacity: 0.5;
+  }
+
+  .lb-step--gold {
+    background: linear-gradient(180deg, #FEF3C7 0%, #FDE68A 45%, #F59E0B 100%);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
+  }
+
+  .lb-step--silver {
+    background: linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 45%, #94A3B8 100%);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.58);
+  }
+
+  .lb-step--bronze {
+    background: linear-gradient(180deg, #FFEDD5 0%, #FDBA74 45%, #FB923C 100%);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.5);
+  }
+
+  .lb-step-label {
     position: relative;
     z-index: 1;
+    font-family: var(--font-display, 'Outfit', system-ui, sans-serif);
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.82);
+    text-shadow: 0 1px 2px rgba(15,23,42,0.18);
+    line-height: 1;
   }
 
-  .podium-grid--solo {
-    grid-template-columns: minmax(0, min(100%, 15.5rem));
-    justify-content: center;
+  .lb-step-label--gold {
+    color: rgba(120,53,15,0.92);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.55);
   }
 
-  .podium-grid--duo {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.22fr);
-    justify-content: center;
-    max-width: 28rem;
-    margin-inline: auto;
-  }
-
-  @media (min-width: 640px) {
-    .podium-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr) minmax(0, 1fr);
-      gap: 1rem;
-    }
-
-    .podium-grid--solo {
-      grid-template-columns: minmax(0, min(100%, 18rem));
-    }
-
-    .podium-grid--duo {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr);
-      max-width: 34rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .podium-grid {
-      gap: 1.25rem;
-    }
-  }
-
-  .podium-card-slot {
-    min-width: 0;
-    width: 100%;
-  }
-
-  .podium-card-slot:not(.podium-card-slot--champion) {
-    opacity: 0.92;
-  }
-
-  .podium-card-slot--champion {
-    z-index: 2;
-  }
-
-  .podium-info-card {
-    @apply border bg-white/95 backdrop-blur-sm;
-    border-color: rgba(21, 128, 61, 0.1);
+  /* ── Podium avatar rings ── */
+  .lb-avatar-ring--gold {
     box-shadow:
-      0 1px 2px rgba(15, 23, 42, 0.04),
-      0 6px 18px rgba(21, 128, 61, 0.07);
+      0 0 0 3px #FFFFFF,
+      0 0 0 6px #F59E0B,
+      0 0 32px rgba(245,158,11,0.50);
+    animation: lb-gold-ring-pulse 2.8s ease-in-out infinite;
   }
 
-  @media (max-width: 639px) {
-    .podium-info-card {
-      padding-inline: 0.625rem;
-      padding-block: 0.625rem;
-    }
-
-    .podium-block--gold { min-height: 3.15rem; }
-    .podium-block--silver { min-height: 2.15rem; }
-    .podium-block--bronze { min-height: 1.85rem; }
-  }
-
-  .podium-info-card--gold {
-    border-color: rgba(250, 204, 21, 0.55);
+  .lb-avatar-ring--silver {
     box-shadow:
-      0 2px 12px rgba(202, 138, 4, 0.18),
-      0 8px 28px rgba(21, 128, 61, 0.08);
-    animation: podium-info-glow 2.8s ease-in-out infinite;
+      0 0 0 3px #FFFFFF,
+      0 0 0 5px #94A3B8;
   }
 
-  .podium-info-card--champion {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(254, 252, 232, 0.95) 100%);
-    border-width: 1.5px;
+  .lb-avatar-ring--bronze {
+    box-shadow:
+      0 0 0 3px #FFFFFF,
+      0 0 0 5px #FB923C,
+      0 0 14px rgba(251,146,60,0.28);
   }
 
-  .podium-score--champion {
-    background: linear-gradient(135deg, #CA8A04 0%, #EAB308 45%, #15803D 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.6));
+  /* ── Podium medals ── */
+  .lb-medal {
+    backdrop-filter: blur(8px);
+  }
+
+  .lb-medal--gold {
+    background: rgba(255,255,255,0.34);
+    color: #78350F;
+    border: 1px solid rgba(255,255,255,0.45);
+    box-shadow: 0 8px 22px rgba(146,64,14,0.12);
+  }
+
+  .lb-medal--silver {
+    background: rgba(241,245,249,0.92);
+    color: #475569;
+    border: 1px solid #CBD5E1;
+  }
+
+  .lb-medal--bronze {
+    background: rgba(255,237,213,0.9);
+    color: #C2410C;
+    border: 1px solid rgba(251,146,60,0.28);
+  }
+
+  /* ── Podium score colors ── */
+  .lb-score--gold {
+    color: #78350F;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  }
+  .lb-score--silver { color: #475569; }
+  .lb-score--bronze { color: #C2410C; }
+
+  /* ── Filter bar ── */
+  .lb-filter {
+    background: rgba(255,255,255,0.92);
+    border: 1px solid #E2E8F0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 28px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+  }
+
+  .lb-input {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    color: #0F172A;
+    outline: none;
+    box-shadow: 0 1px 2px rgba(15,23,42,0.03);
+  }
+
+  .lb-input::placeholder { color: #94A3B8; }
+
+  .lb-input:focus {
+    background: #FFFFFF;
+    border-color: rgba(34,197,94,0.45);
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.12);
+  }
+
+  .lb-input option {
+    background: #FFFFFF;
+    color: #0F172A;
+  }
+
+  /* ── Podium laurel wreath ── */
+  .lb-laurel-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .lb-laurel {
+    position: absolute;
+    font-size: 2.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+    line-height: 1;
+  }
+
+  .lb-laurel--left {
+    left: -1.6rem;
+    transform: translateY(-50%) scaleX(-1);
+  }
+
+  .lb-laurel--right {
+    right: -1.6rem;
+  }
+
+  /* ── Confetti dots ── */
+  .lb-confetti {
+    position: absolute;
+    display: block;
+    opacity: 0.75;
+    animation: lb-confetti-float 3s ease-in-out infinite;
+  }
+
+  /* ── Podium card base ── */
+  .podium-card {
+    @apply relative flex flex-col;
+  }
+
+  .podium-card:focus-visible {
+    outline: 2px solid #FBBF24;
+    outline-offset: 4px;
+    border-radius: 1rem;
   }
 
   .champion-sprint-egg {
@@ -678,22 +658,6 @@
     color: #713F12;
     background: linear-gradient(180deg, #FEF08A 0%, #FACC15 100%);
     box-shadow: 0 4px 14px rgba(202, 138, 4, 0.3);
-  }
-
-  .podium-info-card--silver {
-    border-color: rgba(148, 163, 184, 0.35);
-  }
-
-  .podium-info-card--bronze {
-    border-color: rgba(251, 146, 60, 0.3);
-  }
-
-  .podium-card::before {
-    display: none;
-  }
-
-  .podium-pedestal {
-    display: none;
   }
 
   .developer-badge {
@@ -917,103 +881,85 @@
   50% { transform: translateY(-12px); }
 }
 
-@keyframes podium-aura-pulse {
-  0%, 100% {
-    opacity: 0.75;
-    transform: translate(-50%, -50%) scale(0.88);
-  }
-  50% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.12);
-  }
-}
-
-@keyframes podium-ring-breathe {
-  0%, 100% {
-    box-shadow:
-      0 0 0 3px #fff,
-      0 0 0 6px #FDE047,
-      0 8px 24px rgba(202, 138, 4, 0.45),
-      0 0 28px rgba(250, 204, 21, 0.35);
-  }
-  50% {
-    box-shadow:
-      0 0 0 3px #fff,
-      0 0 0 8px #FACC15,
-      0 12px 36px rgba(202, 138, 4, 0.6),
-      0 0 48px rgba(253, 224, 71, 0.65);
-  }
-}
-
-@keyframes podium-medal-shimmer {
-  0%, 100% { background-position: 140% 0; }
-  50% { background-position: -40% 0; }
-}
-
-@keyframes podium-gold-sheen {
-  0%, 100% { background-position: 160% 0; }
-  50% { background-position: -40% 0; }
-}
-
-@keyframes podium-info-glow {
-  0%, 100% {
-    border-color: rgba(250, 204, 21, 0.45);
-    box-shadow:
-      0 2px 12px rgba(202, 138, 4, 0.14),
-      0 8px 28px rgba(21, 128, 61, 0.08);
-  }
-  50% {
-    border-color: rgba(250, 204, 21, 0.8);
-    box-shadow:
-      0 4px 18px rgba(202, 138, 4, 0.28),
-      0 12px 32px rgba(250, 204, 21, 0.18);
-  }
-}
-
-@keyframes podium-spotlight-breathe {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
-}
-
-@keyframes podium-rays-spin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes podium-crown-bob {
-  0%, 100% { transform: translateY(0) rotate(-4deg); }
-  50% { transform: translateY(-5px) rotate(4deg); }
-}
-
-@keyframes podium-sparkle-twinkle {
-  0%, 100% {
-    opacity: 0.25;
-    transform: rotate(45deg) scale(0.6);
-  }
-  50% {
-    opacity: 1;
-    transform: rotate(45deg) scale(1.25);
-  }
-}
-
-@keyframes podium-medal-pulse {
-  0%, 100% {
-    box-shadow:
-      0 4px 16px rgba(202, 138, 4, 0.4),
-      0 0 0 1px rgba(255, 255, 255, 0.35) inset,
-      0 0 20px rgba(250, 204, 21, 0.28);
-  }
-  50% {
-    box-shadow:
-      0 6px 22px rgba(202, 138, 4, 0.55),
-      0 0 0 1px rgba(255, 255, 255, 0.45) inset,
-      0 0 36px rgba(253, 224, 71, 0.5);
-  }
-}
-
 @keyframes champion-sprint-run-bob {
   0%, 100% { transform: translateY(0) rotate(-2deg); }
   50% { transform: translateY(-5px) rotate(2deg); }
+}
+
+@keyframes lb-confetti-float {
+  0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); opacity: 0.75; }
+  50% { transform: translateY(-8px) rotate(calc(var(--r, 0deg) + 15deg)); opacity: 0.9; }
+}
+
+@keyframes lb-orb-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.97); }
+}
+
+@keyframes lb-gold-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(251,191,36,0.24),
+      0 18px 50px rgba(245,158,11,0.22),
+      0 4px 14px rgba(15,23,42,0.08);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(251,191,36,0.42),
+      0 22px 64px rgba(245,158,11,0.34),
+      0 6px 18px rgba(15,23,42,0.10);
+  }
+}
+
+@keyframes lb-gold-ring-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 3px rgba(255,255,255,0.92),
+      0 0 0 5px #F59E0B,
+      0 0 24px rgba(245,158,11,0.38);
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px rgba(255,255,255,0.96),
+      0 0 0 5px #F59E0B,
+      0 0 36px rgba(245,158,11,0.62);
+  }
+}
+
+@keyframes lb-champion-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -4px, 0); }
+}
+
+@keyframes lb-shimmer-sweep {
+  0%, 55% { transform: translateX(-78%) rotate(8deg); }
+  75%, 100% { transform: translateX(78%) rotate(8deg); }
+}
+
+@keyframes lb-sparkle-float {
+  0%, 100% { opacity: 0.62; transform: translate3d(0, 0, 0) scale(1); }
+  50% { opacity: 1; transform: translate3d(-4px, -7px, 0) scale(1.12); }
+}
+
+@keyframes lb-stat-enter {
+  from { opacity: 0; transform: translate3d(0, 20px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes lb-row-shimmer {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
+}
+
+@keyframes lb-progress-pulse {
+  0%, 100% { filter: saturate(1); box-shadow: 0 0 0 rgba(34,197,94,0); }
+  50% { filter: saturate(1.08); box-shadow: 0 0 12px rgba(34,197,94,0.24); }
+}
+
+@keyframes lb-badge-shimmer {
+  0%, 60% { background-position: -150% 0; }
+  100% { background-position: 150% 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

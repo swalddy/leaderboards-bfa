@@ -2,19 +2,7 @@
 const props = withDefaults(defineProps<{
   rank: number
   size?: 'sm' | 'md' | 'lg'
-}>(), {
-  size: 'md',
-})
-
-const isTopThree = computed(() => props.rank >= 1 && props.rank <= 3)
-
-const label = computed(() => {
-  const n = props.rank
-  if (n === 1) return '1'
-  if (n === 2) return '2'
-  if (n === 3) return '3'
-  return `${n}`
-})
+}>(), { size: 'md' })
 
 const sizeClass = computed(() => {
   if (props.size === 'lg') return 'h-10 w-10 text-sm'
@@ -23,28 +11,19 @@ const sizeClass = computed(() => {
 })
 
 const styleClass = computed(() => {
-  if (props.rank === 1) {
-    return 'bg-gradient-to-br from-amber-300 via-gold to-amber-700 text-white shadow-gold ring-2 ring-amber-200/60'
-  }
-  if (props.rank === 2) {
-    return 'bg-gradient-to-br from-slate-200 via-silver to-slate-400 text-slate-700 ring-2 ring-slate-200'
-  }
-  if (props.rank === 3) {
-    return 'bg-gradient-to-br from-orange-300 via-bronze to-orange-700 text-white ring-2 ring-orange-200/60'
-  }
-  return 'bg-kalbe-mint text-kalbe-green-deep ring-1 ring-kalbe-green/15 font-semibold'
+  if (props.rank === 1) return 'bg-[linear-gradient(110deg,#FCD34D_0%,#FDE047_40%,#F59E0B_55%,#FCD34D_100%)] bg-[length:220%_100%] text-amber-900 font-bold shadow-sm ring-1 ring-amber-300 motion-safe:animate-[lb-badge-shimmer_4s_ease-in-out_infinite]'
+  if (props.rank === 2) return 'bg-[linear-gradient(110deg,#F8FAFC_0%,#CBD5E1_44%,#94A3B8_58%,#F8FAFC_100%)] bg-[length:220%_100%] text-slate-700 font-bold shadow-sm ring-1 ring-slate-300 motion-safe:animate-[lb-badge-shimmer_4.4s_ease-in-out_infinite]'
+  if (props.rank === 3) return 'bg-[linear-gradient(110deg,#FED7AA_0%,#FDBA74_42%,#FB923C_58%,#FED7AA_100%)] bg-[length:220%_100%] text-orange-900 font-bold shadow-sm ring-1 ring-orange-200 motion-safe:animate-[lb-badge-shimmer_4.8s_ease-in-out_infinite]'
+  return 'bg-slate-100 text-slate-600 font-semibold ring-1 ring-slate-200'
 })
 </script>
 
 <template>
   <div
-    class="inline-flex shrink-0 items-center justify-center rounded-full font-display font-bold tabular-nums"
+    class="inline-flex shrink-0 items-center justify-center rounded-full font-display tabular-nums"
     :class="[sizeClass, styleClass]"
     :aria-label="`Rank ${rank}`"
   >
-    <span v-if="isTopThree && size !== 'sm'" class="text-[0.65em] font-extrabold opacity-90">
-      {{ label }}
-    </span>
-    <span v-else>{{ label }}</span>
+    {{ rank }}
   </div>
 </template>

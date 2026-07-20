@@ -265,7 +265,7 @@ onUnmounted(() => {
         <div
           class="relative flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-kalbe-lime via-kalbe-green to-kalbe-green-deep shadow-lime sm:h-24 sm:w-24"
         >
-          <Leaf class="h-10 w-10 text-white sm:h-11 sm:w-11" stroke-width="2.5" aria-hidden="true" />
+          <img src="/bio_logo.png" class="h-10 w-10 sm:h-11 sm:w-11 object-contain" aria-hidden="true" />
         </div>
         <div class="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-card ring-2 ring-kalbe-mint">
           <Flame class="h-4 w-4 text-kalbe-green" aria-hidden="true" />

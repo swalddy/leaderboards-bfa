@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Building2, ChevronRight, Flame, Leaf, Monitor } from 'lucide-vue-next'
+import { Building2, ChevronRight, Flame, Leaf } from 'lucide-vue-next'
 import {
   COMPANY_ROUTES,
   COMPANY_SHORT_LABELS,
@@ -10,35 +10,54 @@ const companies: {
   shortLabel: string
   fullName: string
   description: string
-  icon: 'building' | 'monitor'
 }[] = [
   {
-    to: '/agroveta',
-    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.agroveta],
-    fullName: COMPANY_ROUTES.agroveta,
-    description: 'Leaderboard Donor Kalori untuk karyawan PT Agroveta Husada Dharma.',
-    icon: 'building',
+    to: '/bifarma',
+    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.bifarma],
+    fullName: COMPANY_ROUTES.bifarma,
+    description: 'Leaderboard Donor Kalori untuk karyawan PT Bifarma Adiluhung.',
   },
   {
-    to: '/corporate',
-    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.corporate],
-    fullName: COMPANY_ROUTES.corporate,
-    description: 'Leaderboard Donor Kalori untuk karyawan Corporate Function.',
-    icon: 'building',
+    to: '/innolab',
+    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.innolab],
+    fullName: COMPANY_ROUTES.innolab,
+    description: 'Leaderboard Donor Kalori untuk karyawan PT Innolab Sains Internasional.',
   },
   {
-    to: '/corp-it',
-    shortLabel: 'Corporate IT',
-    fullName: 'Corporate Function — IT',
-    description: 'Leaderboard Donor Kalori untuk tim Corporate IT.',
-    icon: 'monitor',
+    to: '/kalbio',
+    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.kalbio],
+    fullName: COMPANY_ROUTES.kalbio,
+    description: 'Leaderboard Donor Kalori untuk karyawan PT Kalbio Global Medika.',
   },
   {
-    to: '/gcm',
-    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.gcm],
-    fullName: COMPANY_ROUTES.gcm,
-    description: 'Leaderboard Donor Kalori untuk karyawan PT Global Chemindo Megatrading.',
-    icon: 'building',
+    to: '/stemcell',
+    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.stemcell],
+    fullName: COMPANY_ROUTES.stemcell,
+    description: 'Leaderboard Donor Kalori untuk karyawan Stem Cell & Cancer Institute.',
+  },
+  {
+    to: '/innogene',
+    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.innogene],
+    fullName: COMPANY_ROUTES.innogene,
+    description: 'Leaderboard Donor Kalori untuk karyawan Innogene Kalbiotech Pte Ltd.',
+  },
+  {
+    to: '/pharmalab',
+    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.pharmalab],
+    fullName: COMPANY_ROUTES.pharmalab,
+    description: 'Leaderboard Donor Kalori untuk karyawan PT Pharma Metric Labs.',
+  },
+  {
+    to: '/kgb',
+    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.kgb],
+    fullName: COMPANY_ROUTES.kgb,
+    description: 'Leaderboard Donor Kalori untuk karyawan PT Kalbe Genexine Biologics.',
+  },
+  {
+    to: '/kalgendna',
+    shortLabel: COMPANY_SHORT_LABELS[COMPANY_ROUTES.kalgendna],
+    fullName: COMPANY_ROUTES.kalgendna,
+    description: 'Leaderboard Donor Kalori untuk karyawan PT Kalgen DNA.',
   },
 ]
 
@@ -100,16 +119,7 @@ runAfterPaint(() => {
               class="flex h-11 w-11 items-center justify-center rounded-xl bg-kalbe-mint text-kalbe-green ring-1 ring-kalbe-green/10 transition-colors group-hover:bg-gradient-to-br group-hover:from-kalbe-lime group-hover:to-kalbe-green group-hover:text-white group-hover:ring-0"
               aria-hidden="true"
             >
-              <Monitor
-                v-if="company.icon === 'monitor'"
-                class="h-5 w-5"
-                stroke-width="2"
-              />
-              <Building2
-                v-else
-                class="h-5 w-5"
-                stroke-width="2"
-              />
+              <Building2 class="h-5 w-5" stroke-width="2" />
             </div>
             <span
               class="inline-flex items-center gap-1 rounded-full bg-kalbe-mint px-2.5 py-1 text-2xs font-semibold text-kalbe-green-deep ring-1 ring-kalbe-green/10"

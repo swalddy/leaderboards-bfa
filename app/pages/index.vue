@@ -4,11 +4,11 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Pilih Perusahaan — Kalbe Donor Kalori Leaderboard',
-  description: 'Pilih PT Agroveta Husada Dharma, Corporate Function, atau PT Global Chemindo Megatrading untuk melihat leaderboard Donor Kalori.',
+  title: 'Leaderboard — Kalbe Donor Kalori',
+  description: 'Lihat peringkat peserta Kalbe Donor Kalori dari semua perusahaan secara live.',
 })
 </script>
 
 <template>
-  <LeaderboardCompanyPicker />
+  <LeaderboardPage />
 </template>
