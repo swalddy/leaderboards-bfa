@@ -43,8 +43,6 @@ const theme = computed(() => {
     border: 'border-[#F59E0B]',
     avatarSize: 'h-24 w-24 text-3xl sm:h-28 sm:w-28 sm:text-4xl',
     avatarRing: 'lb-avatar-ring--gold',
-    medalClass: 'lb-medal--gold',
-    rankLabel: 'Champion',
     scoreClass: 'lb-score--gold text-2xl sm:text-3xl',
     nameClass: 'text-base font-bold sm:text-lg',
     metaClass: 'text-xs',
@@ -55,8 +53,6 @@ const theme = computed(() => {
     border: 'border-[#94A3B8]',
     avatarSize: 'h-12 w-12 text-base sm:h-16 sm:w-16 sm:text-xl',
     avatarRing: 'lb-avatar-ring--silver',
-    medalClass: 'lb-medal--silver',
-    rankLabel: '2nd',
     scoreClass: 'lb-score--silver text-base sm:text-lg',
     nameClass: 'text-xs font-bold sm:text-sm',
     metaClass: 'text-[10px] sm:text-[11px]',
@@ -67,8 +63,6 @@ const theme = computed(() => {
     border: 'border-[#FB923C]',
     avatarSize: 'h-12 w-12 text-base sm:h-14 sm:w-14 sm:text-lg',
     avatarRing: 'lb-avatar-ring--bronze',
-    medalClass: 'lb-medal--bronze',
-    rankLabel: '3rd',
     scoreClass: 'lb-score--bronze text-base sm:text-lg',
     nameClass: 'text-xs font-bold sm:text-sm',
     metaClass: 'text-[10px] sm:text-[11px]',
@@ -92,19 +86,6 @@ const theme = computed(() => {
       class="relative overflow-hidden rounded-2xl text-center transition-all duration-300 ease-out"
       :class="[theme.card, theme.padding]"
     >
-      <!-- Medal badge -->
-      <div class="mb-4 flex justify-center">
-        <span
-          class="lb-medal inline-flex items-center gap-1.5 rounded-full font-bold shadow-sm"
-          :class="[theme.medalClass, isChampion ? 'px-4 py-1.5 text-sm' : 'px-3 py-1 text-xs']"
-        >
-          <span v-if="isChampion" class="text-base">👑</span>
-          <span v-else-if="place === 2" class="text-sm">🥈</span>
-          <span v-else class="text-sm">🥉</span>
-          {{ theme.rankLabel }}
-        </span>
-      </div>
-
       <!-- Avatar with laurel for champion -->
       <div class="mb-4 flex justify-center">
         <div class="relative">

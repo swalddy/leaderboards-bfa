@@ -202,7 +202,7 @@ export function useLeaderboard(options: UseLeaderboardOptions) {
   const topThree = computed(() => {
     const ranked = filteredBeforeSearch.value
     const searched = applySearch(ranked, searchQuery.value)
-    return enrichEntries(recalculateRanks(searched)).slice(0, 3)
+    return enrichEntries(recalculateRanks(searched)).slice(0, 5)
   })
 
   const restEntries = computed(() => {

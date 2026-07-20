@@ -75,7 +75,7 @@ onUnmounted(() => {
         Top Performers
       </p>
       <h2 id="podium-heading" class="mt-0.5 text-base font-bold text-slate-900 sm:text-lg">
-        Burn for Good Champions
+        Burn for Good Heroes
       </h2>
     </div>
 
@@ -97,7 +97,7 @@ onUnmounted(() => {
 
       <!-- ── MOBILE layout ── -->
       <div class="relative z-10 sm:hidden">
-        <!-- Champion card + platform NO.1 -->
+        <!-- Champion card + Heroes No.1 platform -->
         <div v-if="first" class="mb-3">
           <div data-podium-card data-podium-champion class="relative mx-auto max-w-[16rem]">
             <div class="lb-champion-spotlight" aria-hidden="true" />
@@ -110,11 +110,11 @@ onUnmounted(() => {
               @easter-egg="onChampionEasterEgg"
             />
           </div>
-          <!-- NO.1 platform langsung di bawah card champion -->
+          <!-- Heroes No.1 platform langsung di bawah card champion -->
           <div class="mx-auto max-w-[16rem] flex flex-col" aria-hidden="true">
             <div class="lb-step-3d lb-step-3d--gold flex items-center justify-center gap-2 py-3">
               <span class="lb-step-laurel lb-step-laurel--gold">🌿</span>
-              <span class="lb-step-label-3d lb-step-label-3d--gold">NO.1</span>
+              <span class="lb-step-label-3d lb-step-label-3d--gold">Heroes No.1</span>
               <span class="lb-step-laurel lb-step-laurel--gold lb-step-laurel--flip">🌿</span>
             </div>
             <div class="lb-step-side lb-step-side--gold h-3" />
@@ -146,7 +146,7 @@ onUnmounted(() => {
           <div v-if="second" class="flex flex-col">
             <div class="lb-step-3d lb-step-3d--silver flex items-center justify-center gap-1.5 py-2.5">
               <span class="lb-step-laurel lb-step-laurel--silver">🏅</span>
-              <span class="lb-step-label-3d lb-step-label-3d--silver text-sm">NO.2</span>
+              <span class="lb-step-label-3d lb-step-label-3d--silver text-sm">Heroes No.2</span>
               <span class="lb-step-laurel lb-step-laurel--silver lb-step-laurel--flip">🏅</span>
             </div>
             <div class="lb-step-side lb-step-side--silver h-2.5" />
@@ -154,7 +154,7 @@ onUnmounted(() => {
           <div v-if="third" class="flex flex-col">
             <div class="lb-step-3d lb-step-3d--bronze flex items-center justify-center gap-1.5 py-2.5">
               <span class="lb-step-laurel lb-step-laurel--bronze">🏅</span>
-              <span class="lb-step-label-3d lb-step-label-3d--bronze text-sm">NO.3</span>
+              <span class="lb-step-label-3d lb-step-label-3d--bronze text-sm">Heroes No.3</span>
               <span class="lb-step-laurel lb-step-laurel--bronze lb-step-laurel--flip">🏅</span>
             </div>
             <div class="lb-step-side lb-step-side--bronze h-2.5" />
@@ -230,7 +230,7 @@ onUnmounted(() => {
         <div v-if="second" class="order-1 flex flex-col" :class="entries.length >= 3 ? '' : 'order-2'">
           <div class="lb-step-3d lb-step-3d--silver flex items-center justify-center gap-2 py-3 sm:py-4">
             <span class="lb-step-laurel lb-step-laurel--silver">🏅</span>
-            <span class="lb-step-label-3d lb-step-label-3d--silver">NO.2</span>
+            <span class="lb-step-label-3d lb-step-label-3d--silver">Heroes No.2</span>
             <span class="lb-step-laurel lb-step-laurel--silver lb-step-laurel--flip">🏅</span>
           </div>
           <div class="lb-step-side lb-step-side--silver h-3" />
@@ -238,7 +238,7 @@ onUnmounted(() => {
         <div v-if="first" class="flex flex-col" :class="entries.length >= 3 ? 'order-2' : 'order-1'">
           <div class="lb-step-3d lb-step-3d--gold flex items-center justify-center gap-2 py-4 sm:py-5">
             <span class="lb-step-laurel lb-step-laurel--gold">🌿</span>
-            <span class="lb-step-label-3d lb-step-label-3d--gold">NO.1</span>
+            <span class="lb-step-label-3d lb-step-label-3d--gold">Heroes No.1</span>
             <span class="lb-step-laurel lb-step-laurel--gold lb-step-laurel--flip">🌿</span>
           </div>
           <div class="lb-step-side lb-step-side--gold h-4" />
@@ -246,7 +246,7 @@ onUnmounted(() => {
         <div v-if="third" class="order-3 flex flex-col">
           <div class="lb-step-3d lb-step-3d--bronze flex items-center justify-center gap-2 py-3 sm:py-4">
             <span class="lb-step-laurel lb-step-laurel--bronze">🏅</span>
-            <span class="lb-step-label-3d lb-step-label-3d--bronze">NO.3</span>
+            <span class="lb-step-label-3d lb-step-label-3d--bronze">Heroes No.3</span>
             <span class="lb-step-laurel lb-step-laurel--bronze lb-step-laurel--flip">🏅</span>
           </div>
           <div class="lb-step-side lb-step-side--bronze h-3" />

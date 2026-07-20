@@ -20,6 +20,7 @@ const {
   refresh,
   filteredEntries,
   stats,
+  topThree,
   isEmpty,
   hasError,
   hasLoaded,
@@ -87,7 +88,10 @@ function onSplashExitComplete() {
             :hide-company-filter="isCompanyLocked"
           />
 
-          <LeaderboardStats :stats="stats" />
+          <LeaderboardOverviewTabs
+            :stats="stats"
+            :ticker-entries="topThree"
+          />
 
           <div v-if="isEmpty" class="px-0 py-8 sm:py-10">
             <LeaderboardEmptyState />
