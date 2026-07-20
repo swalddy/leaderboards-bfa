@@ -54,13 +54,7 @@ runAfterPaint(() => {
         <p v-if="lastUpdatedAt" class="hidden text-[10px] text-slate-500 sm:block">
           Updated {{ formatTime(lastUpdatedAt) }}
         </p>
-        <NuxtLink
-          to="/"
-          class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 sm:text-2xs"
-        >
-          <ArrowLeft class="h-3 w-3" aria-hidden="true" />
-          <span class="hidden sm:inline">Kembali</span>
-        </NuxtLink>
+        
         <span class="lb-live-badge inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold sm:text-2xs">
           <span class="relative flex h-1.5 w-1.5">
             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
