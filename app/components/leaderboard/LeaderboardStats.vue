@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Users, Flame, TrendingUp, Activity } from 'lucide-vue-next'
+import { Users, Flame, TrendingUp, Mars, Venus } from 'lucide-vue-next'
 import type { LeaderboardStats } from '~/types/leaderboard'
 import { formatCalories } from '~/utils/leaderboard'
 
@@ -43,10 +43,20 @@ const cards = computed(() => [
     key: 'male',
     label: 'Male',
     value: props.stats.maleParticipants,
-    icon: Activity,
+    icon: Mars,
     glow: 'lb-card--blue',
     iconClass: 'text-blue-600',
     valueClass: 'lb-stat-blue',
+    format: 'number',
+  },
+  {
+    key: 'female',
+    label: 'Female',
+    value: props.stats.femaleParticipants,
+    icon: Venus,
+    glow: 'lb-card--pink',
+    iconClass: 'text-pink-600',
+    valueClass: 'lb-stat-pink',
     format: 'number',
   },
 ])
@@ -65,7 +75,7 @@ function formatValue(value: number, format: string) {
       Challenge overview
     </h2>
 
-    <div class="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
+    <div class="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5 sm:gap-3">
       <article
         v-for="(card, index) in cards"
         :key="card.key"
